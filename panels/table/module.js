@@ -23,9 +23,14 @@
 'use strict';
 
 angular.module('kibana.table', [])
-.controller('table', function($rootScope, $scope, fields, querySrv, dashboard, filterSrv) {
+.controller('table', function($rootScope, $scope, fields, querySrv, dashboard, filterSrv, $filter) {
 
   $scope.panelMeta = {
+    editorTabs : [
+      {title:'Formatting', src:'panels/table/formatting.html'},
+      {title:'Paging', src:'panels/table/pagination.html'},
+      {title:'Queries', src:'partials/querySelect.html'}
+    ],
     status: "Stable",
     description: "A paginated table of records matching your query or queries. Click on a row to "+
       "expand it and review all of the fields associated with that document. <p>"
@@ -55,7 +60,12 @@ angular.module('kibana.table', [])
     spyable : true,
     timeField : "@timestamp",
     timeFormatShort : "yyyy-MM-dd HH:mm:ss",
-    timeFormatLong : "yyyy-MM-dd HH:mm:ss"
+    timeFormatLong : "yyyy-MM-dd HH:mm:ss",
+    normTimes : true,
+    csv : {
+    	header : true,
+    	allfields : true
+    }
   };
   _.defaults($scope.panel,_d);
 
@@ -64,6 +74,7 @@ angular.module('kibana.table', [])
 
     $scope.$on('refresh',function(){$scope.get_data();});
 
+    $scope.fields = fields;
     $scope.get_data();
   };
 
@@ -191,7 +202,11 @@ angular.module('kibana.table', [])
         $scope.data= $scope.data.concat(_.map(results.hits.hits, function(hit) {
           return {
             _source   : kbn.flatten_json(hit._source),
-            highlight : kbn.flatten_json(hit.highlight||{})
+            highlight : kbn.flatten_json(hit.highlight||{}),
+            _type     : hit._type,
+            _index    : hit._index,
+            _id       : hit._id,
+            _sort     : hit.sort
           };
         }));
         
@@ -199,7 +214,7 @@ angular.module('kibana.table', [])
 
         // Sort the data
         $scope.data = _.sortBy($scope.data, function(v){
-          return v._source[$scope.panel.sort[0]];
+          return v._sort[0];
         });
         
         // Reverse if needed
@@ -213,17 +228,13 @@ angular.module('kibana.table', [])
       } else {
         return;
       }
-      
-      $scope.all_fields = kbn.get_all_fields(_.pluck($scope.data,'_source'));
-      fields.add_fields($scope.all_fields);
 
       // If we're not sorting in reverse chrono order, query every index for
       // size*pages results
       // Otherwise, only get size*pages results then stop querying
-      //($scope.data.length < $scope.panel.size*$scope.panel.pages
-     // || !(($scope.panel.sort[0] === $scope.time.field) && $scope.panel.sort[1] === 'desc'))
-      if($scope.data.length < $scope.panel.size*$scope.panel.pages &&
-        _segment+1 < dashboard.indices.length ) {
+      if (($scope.data.length < $scope.panel.size*$scope.panel.pages ||
+        !((_.contains(filterSrv.timeField(),$scope.panel.sort[0])) && $scope.panel.sort[1] === 'desc')) &&
+        _segment+1 < dashboard.indices.length) {
         $scope.get_data(_segment+1,$scope.query_id);
       }
 
@@ -251,6 +262,49 @@ angular.module('kibana.table', [])
     }
     $scope.refresh =  false;
   };
+  
+  $scope.download = function() {
+	var csv = [];
+	var fieldList;
+	if ($scope.panel.csv.allfields) 
+		fieldList = $scope.fields.list;
+	else
+		fieldList = $scope.panel.fields;
+	var allSources = _.pluck($scope.data, '_source');
+	if ($scope.panel.csv.header)
+		csv.push(_.map(fieldList, function (field) {
+			return formatData(field);
+		}).join(","));
+	_.forEach(allSources, function (event) {
+		csv.push(_.map(fieldList, function (field) {
+			if (field == $scope.panel.timeField) {
+				return formatData($filter('datetz')(event[field], dashboard.current.timezone, $scope.panel.timeFormatLong));
+			} else {
+				return formatData(event[field]);
+			}
+		}).join(","));
+	});
+	csv = _.map(csv, function (line) {
+		return line + "\n";
+	});
+    var blob = new Blob(csv, {type: "text/csv;charset=utf-8"});
+    // from filesaver.js
+    window.saveAs(blob, dashboard.current.title+"-"+new Date().getTime()+"-data.csv");
+    return true;
+  }
+  
+  function formatData(input) {
+	  if (_.isUndefined(input)) {
+		  input = "";
+	  } else {
+		  input = input.toString();
+	  } 
+      // replace " with “
+      var regexp = new RegExp(/["]/g);
+      var output = input.replace(regexp, '""');
+      if (output == "") return '';
+      return '"' + output + '"';
+  }
 
 
 })
@@ -297,4 +351,19 @@ angular.module('kibana.table', [])
         }
         //console.log(dt);
     };
+// WIP
+}).filter('tableFieldFormat', function(fields){
+  return function(text,field,event,scope) {
+    var type;
+    if(
+      !_.isUndefined(fields.mapping[event._index]) &&
+      !_.isUndefined(fields.mapping[event._index][event._type])
+    ) {
+      type = fields.mapping[event._index][event._type][field]['type'];
+      if(type === 'date' && scope.panel.normTimes) {
+        return moment(text).format('YYYY-MM-DD HH:mm:ss');
+      }    
+    }
+    return text;
+  };
 });

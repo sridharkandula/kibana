@@ -1,0 +1,24 @@
+  <div class="row-fluid">
+  	<div class="span3" style="white-space:nowrap">
+      <h6>Time Field</h6>
+      <select ng-show="fields.list.length>0"style="width:85%" ng-model="panel.timeField" ng-options="f for f in fields.list"></select>
+    </div>
+    <div class="span4">
+      <h6>Time Display Format (Short) <i class="icon-question-sign" bs-tooltip="'This format will be used for displaying the time field in table.<br /><br />y : year<br />m : minute<br />s: second<br />S: millisecond<br />h: 12 hour format<br />MM: month (numeric representation)<br />MMM: month (abbrevated text representation)<br />MMMM: month (full text representation)<br />k: AM/PM<br />H: hour<br />E: day<br />Z: timezone abbreviation<br />'"></i></h6>
+      <input type="text" ng-model="panel.timeFormatShort" />
+    </div>
+    <div class="span4">
+      <h6>Time Display Format (Long) <i class="icon-question-sign" bs-tooltip="'This format will be used for displaying the time field in details.<br /><br />y : year<br />m : minute<br />s: second<br />S: millisecond<br />h: 12 hour format<br />MM: month (numeric representation)<br />MMM: month (abbrevated text representation)<br />MMMM: month (full text representation)<br />k: AM/PM<br />H: hour<br />E: day<br />Z: timezone abbreviation<br />'"></i></h6>
+      <input type="text" ng-model="panel.timeFormatLong" />
+    </div>
+  </div>
+  <h5>CSV Options</h5>
+  <div class="row-fluid">
+    <div class="span4"> 
+      <h6>CSV Header</h6><input type="checkbox" ng-model="panel.csv.header" ng-checked="panel.csv.header">
+    </div>
+    <div class="span4"> 
+      <h6>All Fields</h6><input type="checkbox" ng-model="panel.csv.allfields" ng-checked="panel.csv.allfields">
+    </div>
+  </div>
+  

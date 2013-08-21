@@ -7,16 +7,16 @@
     }
   </style>
 
-  <span ng-show="panel.spyable" style="position:absolute;right:0px;top:0px" class='panelextra pointer'>
-      <i bs-modal="'partials/inspector.html'" class="icon-eye-open"></i>
+  <span style="position:absolute;right:0px;top:0px" class='panelextra pointer'>
+      <i ng-show="panel.spyable" bs-modal="'partials/inspector.html'" class="icon-eye-open"></i>
   </span>
 
   <div class="row-fluid">
     <div ng-class="{'span3':panel.field_list}" ng-show="panel.field_list">
       <div class="sidebar-nav">
         <h5>Fields <i class=" icon-chevron-sign-left pointer " ng-click="panel.field_list = !panel.field_list" bs-tooltip="'Hide field list'" ng-show="panel.field_list"></i></h5>
-        <ul class="unstyled" style="height:{{row.height}};overflow-y:auto;overflow-x:hidden;">
-          <li ng-style="panel.style" ng-repeat="field in all_fields" >
+        <ul class="unstyled" style="{{panel.overflow}}:{{panel.height || row.height}};overflow-y:auto;overflow-x:hidden;">
+          <li ng-style="panel.style" ng-repeat="field in fields.list" >
             <i class="pointer" ng-class="{'icon-check': _.contains(panel.fields,field),'icon-check-empty': !_.contains(panel.fields,field)}" ng-click="toggle_field(field)"></i>
             <a data-unique="1" bs-popover="'panels/table/micropanel.html'" data-placement="right" ng-click="toggle_micropanel(field)" ng-class="{label: _.contains(panel.fields,field)}">{{field}}</a>
           </li>
@@ -31,12 +31,15 @@
           <i ng-click="panel.offset = 0" ng-show="panel.offset > 0" class='icon-circle-arrow-left pointer'></i>
           <i ng-click="panel.offset = (panel.offset - panel.size)" ng-show="panel.offset > 0" class='icon-arrow-left pointer'></i>
         </div>
-        <div class="span8" style="text-align:center">
+        <div class="span7" style="text-align:center">
           <strong>{{panel.offset}}</strong> to <strong>{{panel.offset + data.slice(panel.offset,panel.offset+panel.size).length}}</strong>
           <small> of {{data.length}} available for paging</small>
         </div>
         <div class="span1" style="text-align:left">
           <i ng-click="panel.offset = (panel.offset + panel.size)" ng-show="data.length > panel.offset+panel.size" class='icon-arrow-right pointer'></i>
+        </div>
+        <div class="span1" style="text-align:center">
+          <i class="icon-download pointer" ng-click="download()" bs-tooltip="'Download as CSV'"></i>
         </div>
       </div>
       <div class="small" ng-show="panel.fields.length == 0"><center>No columns configured. You may want to select some from the list on the left.</center></div>
@@ -55,12 +58,13 @@
           </th>
         
         </thead>
-        <tbody ng-repeat="row in data | slice:panel.offset:panel.offset+panel.size" ng-class-odd="'odd'">
-          <tr ng-click="toggle_details(row)" class="pointer">
-            <td ng-repeat="field in panel.fields" ng-show="field == panel.timeField" ng-bind-html-unsafe="(row.highlight[field]||row._source[field]) | tableHighlight | datetz:dashboard.current.timezone:panel.timeFormatShort | tableTruncate:panel.trimFactor:panel.fields.length"></td>
-            <td ng-repeat="field in panel.fields" ng-show="field != panel.timeField" ng-bind-html-unsafe="(row.highlight[field]||row._source[field]) | tableHighlight | tableTruncate:panel.trimFactor:panel.fields.length"></td>
+        <tbody ng-repeat="event in data | slice:panel.offset:panel.offset+panel.size" ng-class-odd="'odd'">
+          <tr ng-click="toggle_details(event)" class="pointer">
+            <!--<td ng-repeat="field in panel.fields" ng-bind-html-unsafe="(event.highlight[field]||event._source[field]) | tableFieldFormat:field:event:this |tableHighlight | tableTruncate:panel.trimFactor:panel.fields.length"></td>-->
+            <td ng-repeat="field in panel.fields" ng-show="field == panel.timeField" ng-bind-html-unsafe="(event.highlight[field]||event._source[field]) |tableHighlight | datetz:dashboard.current.timezone:panel.timeFormatShort | tableTruncate:panel.trimFactor:panel.fields.length"></td>
+            <td ng-repeat="field in panel.fields" ng-show="field != panel.timeField" ng-bind-html-unsafe="(event.highlight[field]||event._source[field]) |tableHighlight | tableTruncate:panel.trimFactor:panel.fields.length"></td>
           </tr>
-          <tr ng-show="row.kibana.details">
+          <tr ng-show="event.kibana.details">
             <td colspan=1000>
               <table class='table table-bordered table-condensed'>
                 <thead>
@@ -68,7 +72,7 @@
                   <th>Action</th>
                   <th>Value</th>
                 </thead>
-                <tr ng-repeat="(key,value) in row.kibana.details._source" ng-class-odd="'odd'">
+                <tr ng-repeat="(key,value) in event.kibana.details._source" ng-class-odd="'odd'">
                   <td>{{key}}</td>
                   <td>
                     <i class='icon-search pointer' ng-click="build_search(key,value)"></i> 
