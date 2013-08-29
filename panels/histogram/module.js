@@ -276,6 +276,7 @@ angular.module('kibana.histogram', [])
       // Function for rendering panel
       function render_panel() {
 
+    	delete scope.panel.error;
         // IE doesn't work without this
         elem.css({height:scope.panel.height||scope.row.height});
         
@@ -293,7 +294,8 @@ angular.module('kibana.histogram', [])
         var scripts = $LAB.script("common/lib/panels/jquery.flot.js").wait()
           .script("common/lib/panels/jquery.flot.time.js")
           .script("common/lib/panels/jquery.flot.stack.js")
-          .script("common/lib/panels/jquery.flot.selection.js");
+          .script("common/lib/panels/jquery.flot.selection.js")
+          .script("common/lib/panels/jquery.flot.resize.js");
                     
         // Populate element. Note that jvectormap appends, does not replace.
         scripts.wait(function(){
@@ -345,7 +347,7 @@ angular.module('kibana.histogram', [])
             scope.plot = $.plot(elem, scope.data, options);
 
           } catch(e) {
-            elem.text(e);
+            scope.panel.error=e.message;
           }
         });
       }
