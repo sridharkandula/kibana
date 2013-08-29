@@ -19,11 +19,11 @@ var config = new Settings(
   //For example, if i want es2 instance i can setup something like this:
   //ProxyPassMatch ^(/es2)(/_aliases|.*/_search|.*/_mapping)$ http://192.168.1.2/$2
   //and in the following config i can add http://mydomain/es2
-  elasticsearch_servers: ["http://"+window.location.hostname+":9200"],
+  elasticsearch_servers: ["https://log.verse.in", "https://log.verse.in/airtel-tanzania", "https://log.verse.in/airtel-ghana", "https://log.verse.in/airtel-gabon"],
   //By default this will attempt to reach ES at the same host you have
   // elasticsearch installed on. You probably want to set it to the FQDN of your
   // elasticsearch host
-  elasticsearch:    "http://"+window.location.hostname+":9200",   
+  elasticsearch:    "https://log.verse.in",   
   // elasticsearch: 'http://localhost:9200',
   kibana_index:     "kibana-int", 
   modules:          ['histogram','map','pie','table','filtering',
