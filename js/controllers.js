@@ -3,8 +3,8 @@
 'use strict';
 
 angular.module('kibana.controllers', [])
-.controller('DashCtrl', function($scope, $rootScope, $http, $timeout, $route, ejsResource, 
-  fields, dashboard) {
+.controller('DashCtrl', function($scope, $rootScope, $http, $timeout, $route, ejsResource,
+  fields, dashboard, alertSrv) {
 
   $scope.editor = {
     index: 0
@@ -17,13 +17,14 @@ angular.module('kibana.controllers', [])
     $scope._ = _;
     $scope.timezoneJS = timezoneJS;
     $scope.dashboard = dashboard;
+    $scope.dashAlerts = alertSrv;
+    alertSrv.clearAll();
 
     // Provide a global list of all see fields
     $scope.fields = fields;
     $scope.reset_row();
-    $scope.clear_all_alerts();
 
-    var ejs = $scope.ejs = ejsResource(config.elasticsearch);  
+    var ejs = $scope.ejs = ejsResource(config.elasticsearch);
   };
 
   $scope.add_row = function(dash,row) {
@@ -42,28 +43,6 @@ angular.module('kibana.controllers', [])
     return { 'min-height': row.collapse ? '5px' : row.height };
   };
 
-  $scope.alert = function(title,text,severity,timeout) {
-    var alert = {
-      title: title,
-      text: text,
-      severity: severity || 'info',
-    };
-    $scope.global_alert.push(alert);
-    if (timeout > 0) {
-      $timeout(function() {
-        $scope.global_alert = _.without($scope.global_alert,alert);
-      }, timeout);
-    }
-  };
-
-  $scope.clear_alert = function(alert) {
-    $scope.global_alert = _.without($scope.global_alert,alert);
-  };
-
-  $scope.clear_all_alerts = function() {
-    $scope.global_alert = [];
-  }; 
-
   $scope.edit_path = function(type) {
     if(type) {
       return 'panels/'+type+'/editor.html';
@@ -80,7 +59,7 @@ angular.module('kibana.controllers', [])
     return $scope.editorTabs;
   };
 
-  // This is whoafully incomplete, but will do for now 
+  // This is whoafully incomplete, but will do for now
   $scope.parse_error = function(data) {
     var _error = data.match("nested: (.*?);");
     return _.isNull(_error) ? data : _error[1];

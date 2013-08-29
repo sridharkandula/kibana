@@ -56,7 +56,11 @@
         <h6>Index pattern <small>Absolutes in []</small></h6>
         <input type="text" class="input-medium" ng-model="dashboard.current.index.pattern">
       </div>
-      <div class="span3">
+      <div class="span2" ng-show="dashboard.current.index.interval != 'none'">
+        <h6>Failover <i class="icon-question-sign" bs-tooltip="'If no indices match the pattern, failover to default index *NOT RECOMMENDED*'"></i></h6>
+        <input type="checkbox" ng-model="dashboard.current.failover" ng-checked="dashboard.current.failover" />
+      </div>
+      <div class="span3" ng-show="dashboard.current.failover || dashboard.current.index.interval == 'none'">
         <h6>Default Index <small ng-show="dashboard.current.index.interval != 'none'">If index not found</small></h6>
         <input type="text" class="input-medium" ng-model="dashboard.current.index.default">
       </div>
