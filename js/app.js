@@ -44,21 +44,24 @@ _.each(config.modules, function(v) {
 
 /* Application level module which depends on filters, controllers, and services */
 labjs.wait(function(){
+  // Create the module
   angular.module('kibana', modules).config(['$routeProvider', function($routeProvider) {
       $routeProvider
         .when('/dashboard', {
           templateUrl: 'partials/dashboard.html',
         })
-        .when('/dashboard/:type/:id', {
+        .when('/dashboard/:kbnType/:kbnId', {
           templateUrl: 'partials/dashboard.html',
         })
-        .when('/dashboard/:type/:id/:params', {
+        .when('/dashboard/:kbnType/:kbnId/:params', {
           templateUrl: 'partials/dashboard.html'
         })
         .otherwise({
           redirectTo: 'dashboard'
         });
     }]);
+
+  // Wait for ready, then bootstrap
   angular.element(document).ready(function() {
 	timezoneJS.timezone.zoneFileBasePath = config.timezone_path;
     timezoneJS.timezone.defaultZoneFile = config.default_zone_file;
