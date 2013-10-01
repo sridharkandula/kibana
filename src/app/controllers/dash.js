@@ -3,6 +3,7 @@ define([
   'config',
   'underscore',
   'timezonejs',
+
   'services/all'
 ],
 function (angular, config, _, timezoneJS) {
@@ -10,10 +11,21 @@ function (angular, config, _, timezoneJS) {
 
   var module = angular.module('kibana.controllers');
 
-  module.controller('DashCtrl', function($scope, $route, ejsResource, fields, dashboard, alertSrv) {
+  module.controller('DashCtrl', function(
+    $scope, $route, ejsResource, fields, dashboard, alertSrv, panelMove) {
     $scope.editor = {
       index: 0
     };
+
+    // For moving stuff around the dashboard. Needs better names
+    $scope.panelMove = panelMove;
+    $scope.panelMoveDrop = panelMove.onDrop;
+    $scope.panelMoveStart = panelMove.onStart;
+    $scope.panelMoveStop = panelMove.onStop;
+    $scope.panelMoveOver = panelMove.onOver;
+    $scope.panelMoveOut = panelMove.onOut;
+
+
 
     $scope.init = function() {
       $scope.config = config;
@@ -32,6 +44,14 @@ function (angular, config, _, timezoneJS) {
       $scope.reset_row();
 
       $scope.ejs = ejsResource(config.elasticsearch);
+    };
+
+    $scope.isPanel = function(obj) {
+      if(!_.isNull(obj) && !_.isUndefined(obj) && !_.isUndefined(obj.type)) {
+        return true;
+      } else {
+        return false;
+      }
     };
 
     $scope.add_row = function(dash,row) {

@@ -48,6 +48,7 @@
       "collapsable": true,
       "panels": [
         {
+          "title": "Set time span",
           "error": "",
           "span": 6,
           "editable": true,
@@ -88,6 +89,7 @@
       "collapsable": true,
       "panels": [
         {
+          "title": "Search",
           "error": false,
           "span": 12,
           "editable": true,
@@ -111,6 +113,7 @@
       "collapsable": true,
       "panels": [
         {
+          "title": "dashboard filters",
           "error": false,
           "span": 12,
           "editable": true,
@@ -172,6 +175,7 @@
       "collapsable": true,
       "panels": [
         {
+          "title": "All events",
           "error": false,
           "span": 12,
           "editable": true,
@@ -211,6 +215,7 @@
     }
   ],
   "editable": true,
+  "failover": false,
   "index": {
     "interval": "day",
     "pattern": "[logstash-]YYYY.MM.DD",
