@@ -384,11 +384,12 @@ function (angular, app, _, kbn, moment) {
         }).join(","));
       }
       _.forEach(allSources, function (event) {
+        var flat = kbn.flatten_json(event);
         csv.push(_.map(fieldList, function (field) {
           if (field === $scope.panel.timeField) {
-            return formatData($filter('datetz')(event[field], dashboard.current.timezone, $scope.panel.timeFormatLong));
+            return formatData($filter('datetz')(flat[field], dashboard.current.timezone, $scope.panel.timeFormatLong));
           } else {
-            return formatData(event[field]);
+            return formatData(flat[field]);
           }
         }).join(","));
       });
