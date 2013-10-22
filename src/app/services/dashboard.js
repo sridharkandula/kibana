@@ -13,7 +13,8 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
 
   var module = angular.module('kibana.services');
 
-  module.service('dashboard', function($routeParams, $http, $rootScope, $injector, $location,
+  module.service('dashboard', function(
+    $routeParams, $http, $rootScope, $injector, $location, $timeout,
     ejsResource, timer, kbnIndex, alertSrv
   ) {
     // A hash of defaults to use when loading a dashboard
@@ -26,6 +27,19 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
       failover: false,
       panel_hints: true,
       rows: [],
+      pulldowns: [
+        {
+          type: 'query',
+        },
+        {
+          type: 'filtering'
+        }
+      ],
+      nav: [
+        {
+          type: 'timepicker'
+        }
+      ],
       services: {},
       loader: {
         save_gist: false,
@@ -35,10 +49,10 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
         save_temp: true,
         save_temp_ttl_enable: true,
         save_temp_ttl: '30d',
-        load_gist: true,
+        load_gist: false,
         load_elasticsearch: true,
         load_elasticsearch_size: 20,
-        load_local: true,
+        load_local: false,
         hide: false
       },
       index: {
@@ -47,6 +61,7 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
         default: 'INDEX_MISSING',
         server: config.elasticsearch
       },
+      refresh: false
     };
 
     // An elasticJS client to use
@@ -59,6 +74,7 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
 
     this.current = _.clone(_dash);
     this.last = {};
+    this.availablePanels = [];
 
     $rootScope.$on('$routeChangeSuccess',function(){
       // Clear the current dashboard to prevent reloading
@@ -109,13 +125,13 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
     // Since the dashboard is responsible for index computation, we can compute and assign the indices
     // here before telling the panels to refresh
     this.refresh = function() {
-      if (!_.isUndefined(self.current.index.server)) {
+      if (!_.isUndefined(self.current.index) && !_.isUndefined(self.current.index.server)) {
         config.elasticsearch = self.current.index.server;
         ejs = ejsResource(config.elasticsearch);
       }
       if(self.current.index.interval !== 'none') {
         if(filterSrv.idsByType('time').length > 0) {
-          var _range = filterSrv.timeRange('min');
+          var _range = filterSrv.timeRange('last');
           kbnIndex.indices(_range.from,_range.to,
             self.current.index.pattern,self.current.index.interval
           ).then(function (p) {
@@ -170,6 +186,7 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
         self.indices = [dashboard.index.default];
       }
 
+      // Set the current dashboard
       self.current = _.clone(dashboard);
 
       // Ok, now that we've setup the current dashboard, we can inject our services
@@ -180,10 +197,18 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
       querySrv.init();
       filterSrv.init();
 
-      // If there's an index interval set and no existing time filter, send a refresh to set one
-      if(dashboard.index.interval !== 'none' && filterSrv.idsByType('time').length === 0) {
+      // If there's an interval set, the indices have not been calculated yet,
+      // so there is no data. Call refresh to calculate the indices and notify the panels.
+      if(dashboard.index.interval !== 'none') {
         self.refresh();
       }
+
+      if(dashboard.refresh) {
+        self.set_interval(dashboard.refresh);
+      }
+
+      self.availablePanels = _.difference(config.panel_names,
+        _.pluck(_.union(self.current.nav,self.current.pulldowns),'type'));
 
       return true;
     };
@@ -418,6 +443,23 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
         return false;
       });
     };
+
+    this.set_interval = function (interval) {
+      self.current.refresh = interval;
+      if(interval) {
+        var _i = kbn.interval_to_ms(interval);
+        timer.cancel(self.refresh_timer);
+        self.refresh_timer = timer.register($timeout(function() {
+          self.set_interval(interval);
+          self.refresh();
+        },_i));
+        self.refresh();
+      } else {
+        timer.cancel(self.refresh_timer);
+      }
+    };
+
+
   });
 
 });

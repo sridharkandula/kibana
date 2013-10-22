@@ -1,4 +1,4 @@
-define(['angular', 'jquery', 'underscore'], function (angular, $, _) {
+define(['angular', 'jquery', 'underscore', 'moment', 'timezonejs'], function (angular, $, _, moment, timezoneJS) {
   'use strict';
 
   var module = angular.module('kibana.filters');
@@ -24,6 +24,18 @@ define(['angular', 'jquery', 'underscore'], function (angular, $, _) {
     };
   });
 
+  /*
+    Filter an array of objects by elasticsearch version requirements
+  */
+  module.filter('esVersion', function(esVersion) {
+    return function(items, require) {
+      var ret = _.filter(items,function(qt) {
+        return esVersion.is(qt[require]) ? true : false;
+      });
+      return ret;
+    };
+  });
+
   module.filter('slice', function() {
     return function(arr, start, end) {
       if(!_.isUndefined(arr)) {
@@ -37,8 +49,18 @@ define(['angular', 'jquery', 'underscore'], function (angular, $, _) {
       if(_.isObject(arr) && !_.isArray(arr)) {
         return angular.toJson(arr);
       } else {
-        return arr.toString();
+        return _.isNull(arr) ? null : arr.toString();
       }
+    };
+  });
+
+  module.filter('moment', function() {
+    return function(date,mode) {
+      switch(mode) {
+      case 'ago':
+        return moment(date).fromNow();
+      }
+      return moment(date).fromNow();
     };
   });
 
@@ -104,6 +126,30 @@ define(['angular', 'jquery', 'underscore'], function (angular, $, _) {
           return output[0].replace(/.*\//, '');
         }
       }
+    };
+  });
+  
+  module.filter('datetz', function () {
+    return function (text, zone, format) {
+      try {
+        var dt = new timezoneJS.Date(text);
+        if (format === undefined) {
+          format = 'yyyy-MM-dd HH:mm:ss';
+        }
+        if (zone === undefined) {
+          zone = "browser";
+        } else if (zone === "utc") {
+          zone = "Etc/UTC";
+        }
+
+        if (zone !== "browser") {
+          dt.setTimezone(zone);
+        }
+        return dt.toString(format); 
+      } catch (e) {
+        return text;
+      }
+      //console.log(dt);
     };
   });
 

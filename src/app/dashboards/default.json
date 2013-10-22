@@ -10,7 +10,9 @@
           "query" : "*",
           "alias" : "",
           "color" : "#7EB26D",
-          "id" : 0
+          "id" : 0,
+          "pin" : false,
+          "type" : "lucene"
         }
       },
       "ids" : [ 0 ]
@@ -19,10 +21,10 @@
       "idQueue" : [ 1, 2 ],
       "list" : {
         "0" : {
-          "from" : "2013-08-02T07:09:34.028Z",
-          "to" : "2013-08-02T08:09:34.029Z",
-          "field" : "@timestamp",
           "type" : "time",
+          "field" : "@timestamp",
+          "from" : "now-24h",
+          "to" : "now",
           "mandate" : "must",
           "active" : true,
           "alias" : "",
@@ -34,94 +36,24 @@
   },
   "rows" : [ {
     "title" : "Options",
-    "height" : "50px",
+    "height" : "10px",
     "editable" : true,
     "collapse" : false,
     "collapsable" : true,
     "panels" : [ {
-      "error" : "",
-      "span" : 4,
-      "editable" : true,
-      "group" : [ "default" ],
-      "type" : "timepicker",
-      "mode" : "relative",
-      "time_options" : [ "5m", "15m", "1h", "6h", "12h", "24h", "2d", "7d", "30d" ],
-      "timespan" : "1h",
-      "timefield" : "@timestamp",
-      "timeformat" : "",
-      "refresh" : {
-        "enable" : false,
-        "interval" : 30,
-        "min" : 3
-      },
-      "filter_id" : 0,
-      "status" : "Stable"
-    }, {
       "error" : false,
-      "span" : 2,
-      "editable" : true,
-      "group" : [ "default" ],
-      "type" : "dashcontrol",
-      "save" : {
-        "gist" : false,
-        "elasticsearch" : true,
-        "local" : true,
-        "default" : true
-      },
-      "load" : {
-        "gist" : true,
-        "elasticsearch" : true,
-        "local" : true
-      },
-      "hide_control" : false,
-      "elasticsearch_size" : 20,
-      "temp" : true,
-      "temp_ttl" : "15d",
-      "ttl_enable" : true
-    }, {
-      "error" : false,
-      "span" : 6,
+      "span" : 12,
       "editable" : true,
       "group" : [ "default" ],
       "type" : "text",
       "status" : "Stable",
       "mode" : "html",
-      "content" : "<a href=\"#/dashboard/file/staging.json\">Staging</a><br />\n<a href=\"#/dashboard/file/airtel-tanzania.json\">Airtel Tanzania</a><br />\n<a href=\"#/dashboard/file/airtel-gabon.json\">Airtel Gabon</a><br />\n<a href=\"#/dashboard/file/airtel-ghana.json\">Airtel Ghana</a><br />\n",
+      "content" : "<div align=\"right\"><a href=\"#/dashboard/file/staging.json\">Staging</a> | <a href=\"#/dashboard/file/airtel-tanzania.json\">Airtel Tanzania</a> | <a href=\"#/dashboard/file/airtel-gabon.json\">Airtel Gabon</a> | <a href=\"#/dashboard/file/airtel-ghana.json\">Airtel Ghana</a> | <a href=\"#/dashboard/file/safaricom.json\">Safaricom Analytics</a></div>",
       "style" : {
       },
       "title" : ""
-    } ]
-  }, {
-    "title" : "Query",
-    "height" : "50px",
-    "editable" : true,
-    "collapse" : false,
-    "collapsable" : true,
-    "panels" : [ {
-      "error" : false,
-      "span" : 12,
-      "editable" : true,
-      "group" : [ "default" ],
-      "type" : "query",
-      "label" : "Search",
-      "history" : [ ],
-      "remember" : 10,
-      "pinned" : true,
-      "query" : "*"
-    } ]
-  }, {
-    "title" : "Filters",
-    "height" : "50px",
-    "editable" : true,
-    "collapse" : true,
-    "collapsable" : true,
-    "panels" : [ {
-      "error" : false,
-      "span" : 12,
-      "editable" : true,
-      "group" : [ "default" ],
-      "type" : "filtering"
-    } ]
+    } ],
+    "notice" : false
   }, {
     "title" : "Graph",
     "height" : "350px",
@@ -158,7 +90,8 @@
       "percentage" : false,
       "interactive" : true,
       "title" : "Events over time"
-    } ]
+    } ],
+    "notice" : false
   }, {
     "title" : "Events",
     "height" : "350px",
@@ -193,8 +126,16 @@
       "timeField" : "@timestamp",
       "timeFormatShort" : "MMM d, HH:mm:ss.S k (Z)",
       "timeFormatLong" : "MMM d, yyyy HH:mm:ss.S k (Z)",
-      "status" : "Stable"
-    } ]
+      "status" : "Stable",
+      "all_fields" : false,
+      "trimFactor" : 300,
+      "normTimes" : true,
+      "csv" : {
+        "header" : true,
+        "allfields" : true
+      }
+    } ],
+    "notice" : false
   } ],
   "editable" : true,
   "index" : {
@@ -202,5 +143,49 @@
     "pattern" : "[logstash-]YYYY.MM.DD",
     "default" : "_all",
     "server" : "https://log.verse.in"
-  }
+  },
+  "failover" : false,
+  "panel_hints" : true,
+  "pulldowns" : [ {
+    "type" : "query",
+    "collapse" : false,
+    "notice" : false,
+    "enable" : true,
+    "query" : "*",
+    "pinned" : true,
+    "history" : [ ],
+    "remember" : 10
+  }, {
+    "type" : "filtering",
+    "collapse" : true,
+    "notice" : false,
+    "enable" : true
+  } ],
+  "nav" : [ {
+    "type" : "timepicker",
+    "collapse" : false,
+    "notice" : false,
+    "enable" : true,
+    "status" : "Stable",
+    "time_options" : [ "5m", "15m", "1h", "6h", "12h", "24h", "2d", "7d", "30d" ],
+    "refresh_intervals" : [ "5s", "10s", "30s", "1m", "5m", "15m", "30m", "1h", "2h", "1d" ],
+    "timefield" : "@timestamp",
+    "now" : true,
+    "filter_id" : 0
+  } ],
+  "loader" : {
+    "save_gist" : false,
+    "save_elasticsearch" : true,
+    "save_local" : true,
+    "save_default" : true,
+    "save_temp" : true,
+    "save_temp_ttl_enable" : true,
+    "save_temp_ttl" : "30d",
+    "load_gist" : false,
+    "load_elasticsearch" : true,
+    "load_elasticsearch_size" : 20,
+    "load_local" : false,
+    "hide" : false
+  },
+  "refresh" : false
 }

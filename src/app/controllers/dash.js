@@ -12,13 +12,15 @@ function (angular, config, _, timezoneJS) {
   var module = angular.module('kibana.controllers');
 
   module.controller('DashCtrl', function(
-    $scope, $route, ejsResource, fields, dashboard, alertSrv, panelMove) {
+    $scope, $route, ejsResource, fields, dashboard, alertSrv, panelMove, esVersion) {
+
+    $scope.requiredElasticSearchVersion = ">=0.20.5";
+
     $scope.editor = {
       index: 0
     };
 
-    // For moving stuff around the dashboard. Needs better names
-    $scope.panelMove = panelMove;
+    // For moving stuff around the dashboard.
     $scope.panelMoveDrop = panelMove.onDrop;
     $scope.panelMoveStart = panelMove.onStart;
     $scope.panelMoveStop = panelMove.onStop;
@@ -26,10 +28,9 @@ function (angular, config, _, timezoneJS) {
     $scope.panelMoveOut = panelMove.onOut;
 
 
-
     $scope.init = function() {
       $scope.config = config;
-      // Make underscore.js available to views
+      // Make stuff, including underscore.js available to views
       $scope._ = _;
       timezoneJS.timezone.zoneFileBasePath = config.timezone_path;
       timezoneJS.timezone.defaultZoneFile = config.default_zone_file;
@@ -37,9 +38,12 @@ function (angular, config, _, timezoneJS) {
       $scope.timezoneJS = timezoneJS;
       $scope.dashboard = dashboard;
       $scope.dashAlerts = alertSrv;
+      $scope.esVersion = esVersion;
+
+      // Clear existing alerts
       alertSrv.clearAll();
 
-      // Provide a global list of all see fields
+      // Provide a global list of all seen fields
       $scope.fields = fields;
       $scope.reset_row();
 
