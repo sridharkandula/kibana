@@ -1,4 +1,4 @@
-define(['jquery','underscore','moment','chromath','timezonejs'],
+define(['jquery','underscore','moment','timezonejs','chromath'],
 function($, _, moment, timezoneJS) {
   'use strict';
 
