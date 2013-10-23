@@ -1,4 +1,4 @@
-define(['jquery', 'underscore','moment', 'timezonejs'],
+define(['jquery','underscore','moment','chromath','timezonejs'],
 function($, _, moment, timezoneJS) {
   'use strict';
 
@@ -466,6 +466,22 @@ function($, _, moment, timezoneJS) {
         'color:' + color,
         'font-size:' + diameter + 'px',
       ].join(';') + '"></div>';
+  };
+
+  kbn.colorSteps = function(col,steps) {
+
+    var _d = steps > 5 ? 1.6/steps : 0.3, // distance between steps
+      _p = []; // adjustment percentage
+
+    // Create a range of numbers between -0.8 and 0.8
+    for(var i = 1; i<steps+1; i+=1) {
+      _p.push(i%2 ? ((i-1)*_d*-1)/2 : i*_d/2);
+    }
+
+    // Create the color range
+    return _.map(_p.sort(function(a,b){return a-b;}),function(v) {
+      return v<0 ? Chromath.darken(col,v*-1).toString() : Chromath.lighten(col,v).toString();
+    });
   };
 
   return kbn;

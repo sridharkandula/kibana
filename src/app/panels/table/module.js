@@ -33,7 +33,6 @@ function (angular, app, _, kbn, moment) {
   var module = angular.module('kibana.panels.table', []);
   app.useModule(module);
 
-
   module.controller('table', function($rootScope, $scope, $modal, $q, $compile, fields, querySrv, dashboard, filterSrv, $filter) {
     $scope.panelMeta = {
       modals : [
@@ -86,6 +85,7 @@ function (angular, app, _, kbn, moment) {
       all_fields: false,
       trimFactor: 300,
       normTimes : true,
+      spyable : true,
       timeField : "@timestamp",
       timeFormatShort : "yyyy-MM-dd HH:mm:ss",
       timeFormatLong : "yyyy-MM-dd HH:mm:ss",
@@ -122,7 +122,6 @@ function (angular, app, _, kbn, moment) {
     };
 
     var showModal = function(panel,type) {
-
       $scope.facetPanel = panel;
       $scope.facetType = type;
 
@@ -232,16 +231,17 @@ function (angular, app, _, kbn, moment) {
 
       $scope.panelMeta.loading = true;
 
-      $scope.panel.queries.ids = querySrv.idsByMode($scope.panel.queries);
-
       _segment = _.isUndefined(segment) ? 0 : segment;
       $scope.segment = _segment;
 
       request = $scope.ejs.Request().indices(dashboard.indices[_segment]);
 
+      $scope.panel.queries.ids = querySrv.idsByMode($scope.panel.queries);
+      var queries = querySrv.getQueryObjs($scope.panel.queries.ids);
+
       boolQuery = $scope.ejs.BoolQuery();
-      _.each($scope.panel.queries.ids,function(id) {
-        boolQuery = boolQuery.should(querySrv.getEjsObj(id));
+      _.each(queries,function(q) {
+        boolQuery = boolQuery.should(querySrv.toEjsObj(q));
       });
 
       request = request.query(
@@ -377,19 +377,18 @@ function (angular, app, _, kbn, moment) {
       else {
         fieldList = $scope.panel.fields;
       }
-      var allSources = _.pluck($scope.data, '_source');
+      var allSources = _.pluck($scope.data, 'kibana');
       if ($scope.panel.csv.header) {
         csv.push(_.map(fieldList, function (field) {
           return formatData(field);
         }).join(","));
       }
       _.forEach(allSources, function (event) {
-        var flat = kbn.flatten_json(event);
         csv.push(_.map(fieldList, function (field) {
           if (field === $scope.panel.timeField) {
-            return formatData($filter('datetz')(flat[field], dashboard.current.timezone, $scope.panel.timeFormatLong));
+            return formatData($filter('datetz')(event._source[field], dashboard.current.timezone, $scope.panel.timeFormatLong));
           } else {
-            return formatData(flat[field]);
+            return formatData(event._source[field]);
           }
         }).join(","));
       });
@@ -476,7 +475,7 @@ function (angular, app, _, kbn, moment) {
       return '';
     };
   });
-  
+
   // WIP
   module.filter('tableFieldFormat', function(fields){
     return function(text,field,event,scope) {
