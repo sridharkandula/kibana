@@ -395,16 +395,15 @@ function (angular, app, _, kbn, moment) {
       else {
         fieldList = $scope.panel.fields;
       }
-      var allSources = _.pluck($scope.data, '_source');
+      var allSources = _.pluck($scope.data, 'kibana');
       if ($scope.panel.csv.header) {
         csv.push(_.map(fieldList, function (field) {
           return formatData(field);
         }).join(","));
       }
       _.forEach(allSources, function (event) {
-        var flat = kbn.flatten_json(event);
         csv.push(_.map(fieldList, function (field) {
-          return formatData(flat[field]);
+          return formatData(event._source[field]);
         }).join(","));
       });
       return csv.join("\n") + "\n";
