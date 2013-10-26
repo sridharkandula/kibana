@@ -64,7 +64,6 @@ function (angular, app, _, kbn, moment) {
 
     // Set and populate defaults
     var _d = {
-      status  : "Stable",
       queries     : {
         mode        : 'all',
         ids         : []
