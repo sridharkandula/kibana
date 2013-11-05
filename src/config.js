@@ -55,7 +55,8 @@ function (Settings) {
       'trends',
       'bettermap',
       'query',
-      'terms'
+      'terms',
+      'sparklines'
     ],
     timezone_path: "tz",
     //specify what all zone files to load by default eg. ['asia', 'africa']

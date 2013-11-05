@@ -35,7 +35,6 @@ define([
   'kbn',
   'moment',
   './timeSeries',
-
   'jquery.flot',
   'jquery.flot.events',
   'jquery.flot.selection',
@@ -98,6 +97,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
       intervals     : ['auto','1s','1m','5m','10m','30m','1h','3h','12h','1d','1w','1y'],
       fill          : 0,
       linewidth     : 3,
+      pointradius   : 5,
       spyable       : true,
       zoomlinks     : true,
       bars          : true,
@@ -492,7 +492,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
                   show: scope.panel.points,
                   fill: 1,
                   fillColor: false,
-                  radius: 5
+                  radius: scope.panel.pointradius
                 },
                 shadowSize: 1
               },
@@ -591,7 +591,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
 
         var $tooltip = $('<div>');
         elem.bind("plothover", function (event, pos, item) {
-          var group, value;
+          var group, value, timestamp;
           if (item) {
             if (item.series.info.alias || scope.panel.tooltip.query_as_alias) {
               group = '<small style="font-size:0.9em;">' +
@@ -601,14 +601,13 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
             } else {
               group = kbn.query_color_dot(item.series.color, 15) + ' ';
             }
-            if (scope.panel.stack && scope.panel.tooltip.value_type === 'individual')  {
-              value = item.datapoint[1] - item.datapoint[2];
-            } else {
-              value = item.datapoint[1];
-            }
+            value = (scope.panel.stack && scope.panel.tooltip.value_type === 'individual') ?
+              item.datapoint[1] - item.datapoint[2] :
+              item.datapoint[1];
+            timestamp = $filter('datetz')(item.datapoint[0], dashboard.current.timezone,'yyyy-MM-dd HH:mm:ss');
             $tooltip
               .html(
-                group + value + " @ " + $filter('datetz')(item.datapoint[0], dashboard.current.timezone,'MM/dd HH:mm:ss')
+                group + value + " @ " + timestamp
               )
               .place_tt(pos.pageX, pos.pageY);
           } else {
