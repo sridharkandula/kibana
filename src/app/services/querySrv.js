@@ -130,7 +130,6 @@ function (angular, _, config, kbn) {
 
     this.init = function() {
       ejs = ejsResource(config.elasticsearch);
-      _q = dashboard.current.services.query;
 
       self.list = dashboard.current.services.query.list;
       self.ids = dashboard.current.services.query.ids;
@@ -138,7 +137,6 @@ function (angular, _, config, kbn) {
       // Check each query object, populate its defaults
       _.each(self.list,function(query) {
         query = self.defaults(query);
-        console.log(query);
       });
 
       if (self.ids.length === 0) {
