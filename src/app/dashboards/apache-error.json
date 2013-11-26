@@ -57,7 +57,7 @@
         "1": {
           "type": "field",
           "field": "@fields.request",
-          "query": "{{ARGS.operator}}",
+          "query": "\"{{ARGS.operator}}\"",
           "mandate": "must",
           "active": true,
           "alias": "",
