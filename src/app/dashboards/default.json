@@ -48,7 +48,7 @@
       "type" : "text",
       "status" : "Stable",
       "mode" : "html",
-      "content" : "<div align=\"right\"><a href=\"#/dashboard/file/staging.json\">Staging</a> | <a href=\"#/dashboard/file/airtel-tanzania.json\">Airtel Tanzania</a> | <a href=\"#/dashboard/file/airtel-gabon.json\">Airtel Gabon</a> | <a href=\"#/dashboard/file/airtel-ghana.json\">Airtel Ghana</a> | <a href=\"#/dashboard/file/safaricom.json\">Safaricom Analytics</a> | <a href=\"#/dashboard/file/apache-error.json?operator=safaricom&\">Safaricom Error</a></div>",
+      "content" : "<div align=\"right\"><a href=\"#/dashboard/file/staging.json\">Staging</a> | <a href=\"#/dashboard/file/airtel-tanzania.json\">Airtel Tanzania</a> | <a href=\"#/dashboard/file/airtel-gabon.json\">Airtel Gabon</a> | <a href=\"#/dashboard/file/airtel-ghana.json\">Airtel Ghana</a> | <a href=\"#/dashboard/file/safaricom.json\">Safaricom Analytics</a> | <a href=\"#/dashboard/file/apache-error.json?operator=safaricomkenya&\">Safaricom Error</a></div>",
       "style" : {
       },
       "title" : ""
