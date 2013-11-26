@@ -302,10 +302,9 @@
           "fields": [
             "@timestamp",
             "@fields.outputMsisdn",
-            "@fields.request",
             "@fields.timetaken",
             "@fields.response",
-            "@message"
+            "@fields.request"
           ],
           "highlight": [],
           "sortable": true,
@@ -320,7 +319,7 @@
           },
           "field_list": false,
           "all_fields": true,
-          "trimFactor": 800,
+          "trimFactor": 300,
           "normTimes": true,
           "timeField": "@timestamp",
           "timeFormatShort": "MMM d, HH:mm:ss.S k (Z)",
