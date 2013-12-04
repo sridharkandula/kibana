@@ -479,9 +479,34 @@ function($, _, moment, timezoneJS) {
     });
   };
 
+  // Find the smallest missing number in an array
+  kbn.smallestMissing = function(arr,start,end) {
+    start = start || 0;
+    end = end || arr.length-1;
+
+    if(start > end) {
+      return end + 1;
+    }
+    if(start !== arr[start]) {
+      return start;
+    }
+    var middle = Math.floor((start + end) / 2);
+
+    if (arr[middle] > middle) {
+      return kbn.smallestMissing(arr, start, middle);
+    } else {
+      return kbn.smallestMissing(arr, middle + 1, end);
+    }
+  };
+
   kbn.byteFormat = function(size, decimals) {
     var ext, steps = 0;
-    decimals = decimals || 2;
+
+    if(_.isUndefined(decimals)) {
+      decimals = 2;
+    } else if (decimals === 0) {
+      decimals = undefined;
+    }
 
     while (Math.abs(size) >= 1024) {
       steps++;
@@ -515,6 +540,53 @@ function($, _, moment, timezoneJS) {
       break;
     case 8:
       ext = " YB";
+      break;
+    }
+
+    return (size.toFixed(decimals) + ext);
+  };
+
+  kbn.shortFormat = function(size, decimals) {
+    var ext, steps = 0;
+
+    if(_.isUndefined(decimals)) {
+      decimals = 2;
+    } else if (decimals === 0) {
+      decimals = undefined;
+    }
+
+    while (Math.abs(size) >= 1000) {
+      steps++;
+      size /= 1000;
+    }
+
+    switch (steps) {
+    case 0:
+      ext = "";
+      break;
+    case 1:
+      ext = " K";
+      break;
+    case 2:
+      ext = " Mil";
+      break;
+    case 3:
+      ext = " Bil";
+      break;
+    case 4:
+      ext = " Tri";
+      break;
+    case 5:
+      ext = " Quadr";
+      break;
+    case 6:
+      ext = " Quint";
+      break;
+    case 7:
+      ext = " Sext";
+      break;
+    case 8:
+      ext = " Sept";
       break;
     }
 
