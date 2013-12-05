@@ -59,7 +59,8 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
         interval: 'none',
         pattern: '_all',
         default: 'INDEX_MISSING',
-        server: config.elasticsearch
+        server: config.elasticsearch,
+        warm_fields: true
       },
       refresh: false
     };
