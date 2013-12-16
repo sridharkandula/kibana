@@ -14,6 +14,7 @@ function (_) {
       elasticsearch : "http://"+window.location.hostname+":9200",
       panel_names   : [],
       kibana_index  : 'kibana-int',
+      default_route     : '/dashboard/file/default.json',
       timezone_path: "tz",
       default_zone_file: []
     };
