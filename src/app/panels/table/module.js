@@ -22,7 +22,7 @@ function (angular, app, _, kbn) {
   var module = angular.module('kibana.panels.table', []);
   app.useModule(module);
 
-  module.controller('table', function($rootScope, $scope, $modal, $q, $compile, fields, querySrv, dashboard, filterSrv, $filter) {
+  module.controller('table', function($rootScope, $scope, $modal, $q, $compile, fields, querySrv, dashboard, filterSrv) {
     $scope.panelMeta = {
       modals : [
         {
@@ -30,6 +30,13 @@ function (angular, app, _, kbn) {
           icon: "icon-info-sign",
           partial: "app/partials/inspector.html",
           show: $scope.panel.spyable
+        },
+        {
+          description: "CSV",
+          icon: "icon-table",
+          partial: "app/partials/csv.html",
+          show: true,
+          click: function() { $scope.csv_data = $scope.to_csv(); }
         }
       ],
       editorTabs : [
@@ -435,11 +442,18 @@ function (angular, app, _, kbn) {
       }
       return obj;
     };
-    
-    $scope.download = function() {
+
+    $scope.download_csv = function() {
+      var blob = new Blob([$scope.csv_data], { type: "text/csv" });
+      // from filesaver.js
+      window.saveAs(blob, dashboard.current.title + "-" + $scope.panel.title + "-" + new Date().getTime() + ".csv");
+      return true;
+    };
+
+    $scope.to_csv = function() {
       var csv = [];
       var fieldList;
-      if ($scope.panel.csv.allfields) { 
+      if ($scope.panel.csv.allfields) {
         fieldList = $scope.fields.list;
       }
       else {
@@ -453,22 +467,12 @@ function (angular, app, _, kbn) {
       }
       _.forEach(allSources, function (event) {
         csv.push(_.map(fieldList, function (field) {
-          if (field === $scope.panel.timeField) {
-            return formatData($filter('datetz')(event._source[field], dashboard.current.timezone, $scope.panel.timeFormatLong));
-          } else {
-            return formatData(event._source[field]);
-          }
+          return formatData(event._source[field]);
         }).join(","));
       });
-      csv = _.map(csv, function (line) {
-        return line + "\n";
-      });
-      var blob = new Blob(csv, {type: "text/csv;charset=utf-8"});
-      // from filesaver.js
-      window.saveAs(blob, dashboard.current.title+"-"+new Date().getTime()+"-data.csv");
-      return true;
+      return csv.join("\n") + "\n";
     };
-      
+
     function formatData(input) {
       if (_.isUndefined(input)) {
         input = "";
