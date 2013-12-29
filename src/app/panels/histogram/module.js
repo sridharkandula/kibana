@@ -48,7 +48,6 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
           icon: "icon-table",
           partial: "app/partials/csv.html",
           show: true,
-          click: function() { $scope.csv_data = $scope.to_csv(); }
         }
       ],
       editorTabs : [
@@ -470,6 +469,8 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
           // Tell the histogram directive to render.
           $scope.$emit('render', data);
 
+          $scope.csv_data = $scope.to_csv(data);
+
           // If we still have segments left, get them
           if(segment < dashboard.indices.length-1) {
             $scope.get_data(data,segment+1,query_id);
@@ -478,14 +479,14 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
       });
     };
 
-    $scope.to_csv = function() {
+    $scope.to_csv = function(data) {
       var headers = [],
         rows    = {},
         csv     = [];
 
       headers.push("time");
 
-      _.each($scope.data, function(series) {
+      _.each(data, function(series) {
         headers.push(series.info.alias || series.info.query);
         _.each(series.data, function(point, row) {
           if (!rows[row]) {
@@ -507,7 +508,7 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
       _.each(rows, function(row) {
         var values = [];
 
-        values.push(moment(row.time).format('YYYY-MM-DDTHH:mm:ss'));
+        values.push($filter('datetz')(row.time, dashboard.current.timezone,'MMM d, yyyy HH:mm:ss.S k (Z)'));
         _.each(row.values, function(value) {
           values.push(value);
         });
