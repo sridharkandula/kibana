@@ -1,5 +1,5 @@
 {
-  "title" : "Staging",
+  "title" : "Alert Manager",
   "timezone" : "Asia/Kolkata",
   "style" : "light",
   "services" : {
@@ -48,7 +48,7 @@
       "type" : "text",
       "status" : "Stable",
       "mode" : "html",
-      "content" : "<div align=\"right\"><a href=\"#/dashboard/file/default.json\">Default</a> | <a href=\"#/dashboard/file/am.json\">AM</a> | <a href=\"#/dashboard/file/safaricom.json\">Safaricom Analytics</a> | <a href=\"#/dashboard/file/apache-error.json?operator=safaricomkenya&\">Safaricom Error</a></div>",
+      "content" : "<div align=\"right\"><a href=\"#/dashboard/file/default.json\">Default</a> | <a href=\"#/dashboard/file/staging.json\">Staging</a> | <a href=\"#/dashboard/file/safaricom.json\">Safaricom Analytics</a> | <a href=\"#/dashboard/file/apache-error.json?operator=safaricomkenya&\">Safaricom Error</a></div>",
       "style" : {
       },
       "title" : ""
@@ -140,7 +140,7 @@
   "editable" : true,
   "index" : {
     "interval" : "day",
-    "pattern" : "[staginglogstash-]YYYY.MM.DD",
+    "pattern" : "[amlogstash-]YYYY.MM.DD",
     "default" : "_all",
     "server" : "https://log.verse.in"
   },
