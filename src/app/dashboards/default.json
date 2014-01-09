@@ -48,7 +48,7 @@
       "type" : "text",
       "status" : "Stable",
       "mode" : "html",
-      "content" : "<div align=\"right\"><a href=\"#/dashboard/file/staging.json\">Staging</a> | <a href=\"#/dashboard/file/am.json\">AM</a> | <a href=\"#/dashboard/file/safaricom.json\">Safaricom Analytics</a> | <a href=\"#/dashboard/file/apache-error.json?operator=safaricom&\">Safaricom Error</a></div>",
+      "content" : "<div align=\"right\"><a href=\"#/dashboard/file/staging.json\">Staging</a> | <div align=\"right\"><a href=\"#/dashboard/file/admin.json\">Admin</a> | <a href=\"#/dashboard/file/am.json\">AM</a> | <a href=\"#/dashboard/file/safaricom.json\">Safaricom Analytics</a> | <a href=\"#/dashboard/file/apache-error.json?operator=safaricom&\">Safaricom Error</a></div>",
       "style" : {
       },
       "title" : ""
