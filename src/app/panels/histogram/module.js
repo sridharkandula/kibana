@@ -744,6 +744,7 @@ function (angular, app, $, _, kbn, moment, timeSeries, numeral) {
 
             if(scope.panel.annotate.enable) {
               options.events = {
+                clustering: true,
                 levels: 1,
                 data: scope.annotations,
                 types: {
