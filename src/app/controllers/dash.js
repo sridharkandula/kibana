@@ -31,7 +31,7 @@ function (angular, config, _, timezoneJS) {
   var module = angular.module('kibana.controllers');
 
   module.controller('DashCtrl', function(
-    $scope, $route, ejsResource, fields, dashboard, alertSrv, panelMove, esVersion) {
+    $scope, $route, ejsResource, fields, dashboard, alertSrv, panelMove, esVersion, kbnVersion) {
 
     $scope.requiredElasticSearchVersion = ">=0.90.3";
 
@@ -49,6 +49,7 @@ function (angular, config, _, timezoneJS) {
 
     $scope.init = function() {
       $scope.config = config;
+      $scope.kbnVersion = kbnVersion;
       // Make stuff, including underscore.js available to views
       $scope._ = _;
       timezoneJS.timezone.zoneFileBasePath = config.timezone_path;
