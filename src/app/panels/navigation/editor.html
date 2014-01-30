@@ -1,0 +1,21 @@
+  <div class="editor-row">
+    <div class="section">
+      <div class="editor-option">
+        <label class="small">Source</label>
+        <select ng-model='panel.source' ng-options="source for source in ['url', 'panel']">
+        </select>
+      </div>
+      <div class="editor-option" ng-show="panel.source == 'panel'">
+        <label class="small">Name</label>
+        <input type="text" class="input-large" ng-model="panel.name">
+      </div>
+      <div class="editor-option" ng-show="panel.source == 'panel'">
+        <label class="small">Links</label>
+        <input type="text" array-join class="input-large" ng-model="panel.links">
+      </div>
+      <div class="editor-option" ng-show="panel.source == 'url'">
+        <label class="small">URL</label>
+        <input type="text" class="input-large" ng-model="panel.url">
+      </div>
+    </div>
+  </div>

@@ -59,30 +59,6 @@
   },
   "rows": [
     {
-      "title": "Options",
-      "height": "10px",
-      "editable": true,
-      "collapse": false,
-      "collapsable": true,
-      "panels": [
-        {
-          "error": false,
-          "span": 12,
-          "editable": true,
-          "group": [
-            "default"
-          ],
-          "type": "text",
-          "status": "Stable",
-          "mode": "html",
-          "content": "<div align=\"right\"><a href=\"#/dashboard/file/default.json\">Default</a> | <div align=\"right\"><a href=\"#/dashboard/file/staging.json\">Staging</a> | <a href=\"#/dashboard/file/am.json\">AM</a> | <a href=\"#/dashboard/file/safaricom.json\">Safaricom Analytics</a> | <a href=\"#/dashboard/file/apache-error.json?operator=safaricom&\">Safaricom Error</a></div>",
-          "style": {},
-          "title": ""
-        }
-      ],
-      "notice": false
-    },
-    {
       "title": "Severity",
       "height": "250px",
       "editable": true,
@@ -432,6 +408,11 @@
       "timefield": "@timestamp",
       "now": true,
       "filter_id": 0
+    },
+    {
+      "type": "navigation",
+      "source": "url",
+      "url": "app/dashboards/links.json"
     }
   ],
   "loader": {

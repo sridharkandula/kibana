@@ -73,7 +73,8 @@ function (Settings) {
       'query',
       'terms',
       'stats',
-      'sparklines'
+      'sparklines',
+	    'navigation'
     ],
     timezone_path: "tz",
     //specify what all zone files to load by default eg. ['asia', 'africa']

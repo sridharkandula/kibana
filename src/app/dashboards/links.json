@@ -1,0 +1,29 @@
+{
+  "name" : "Dashboards",
+  "links": [
+    {
+      "name": "Default",
+      "url": "#/dashboard/file/default.json"
+    },
+    {
+      "name": "Admin",
+      "url": "#/dashboard/file/admin.json"
+    },
+    {
+      "name": "AM",
+      "url": "#/dashboard/file/am.json"
+    },
+    {
+      "name": "Safaricom Analytics",
+      "url": "#/dashboard/file/safaricom.json"
+    },
+    {
+      "name": "Safaricom Errors",
+      "url": "#/dashboard/file/apache-error.json?operator=safaricom"
+    },
+    {
+      "name": "Staging",
+      "url": "#/dashboard/file/staging.json"
+    }
+  ]
+}
