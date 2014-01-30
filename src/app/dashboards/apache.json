@@ -10,14 +10,14 @@
         "0": {
           "id": 0,
           "type": "lucene",
-          "query": "@type:\"apache_combined_access_logs\" AND @fields.response:[200 TO 399]",
+          "query": "type:\"apache_combined_access_logs\" AND response:[200 TO 399]",
           "alias": "Ok",
           "color": "#7EB26D",
           "pin": true,
           "enable": true
         },
         "1": {
-          "query": "@type:\"apache_combined_access_logs\" AND NOT @fields.response:[200 TO 399] AND NOT @fields.request:\"/favicon.ico\"",
+          "query": "type:\"apache_combined_access_logs\" AND NOT response:[200 TO 399]",
           "alias": "Not Ok",
           "color": "#E24D42",
           "pin": true,
@@ -26,7 +26,7 @@
           "enable": true
         },
         "2": {
-          "query": "@type:\"apache_combined_access_logs\" AND @fields.timetaken:[1000000 TO *] AND NOT @message:\"dm-webservice\"",
+          "query": "type:\"apache_combined_access_logs\" AND timetaken:[1000000 TO *]",
           "alias": "Time Taken > 1s",
           "color": "#F2C96D",
           "pin": true,
@@ -56,29 +56,60 @@
         },
         "1": {
           "type": "field",
-          "field": "@fields.request",
+          "field": "request",
           "query": "{{ARGS.operator}}",
           "mandate": "must",
-          "active": true,
+          "active": {{ARGS.active}},
           "alias": "",
           "id": 1
+        },
+        "2": {
+          "type": "field",
+          "field": "request",
+          "query": "monitoring",
+          "mandate": "mustNot",
+          "active": true,
+          "alias": "",
+          "id": 2
+        },
+        "3": {
+          "type": "field",
+          "field": "request",
+          "query": "dm-webservice",
+          "mandate": "mustNot",
+          "active": true,
+          "alias": "",
+          "id": 3
+        },
+        "4": {
+          "type": "field",
+          "field": "request",
+          "query": "BackboneService",
+          "mandate": "mustNot",
+          "active": true,
+          "alias": "",
+          "id": 4
         }
       },
       "ids": [
         0,
-        1
+        1,
+        2,
+        3,
+        4
       ]
     }
   },
   "rows": [
     {
-      "title": "Graph",
+      "title": "Graphs",
       "height": "400px",
       "editable": true,
       "collapse": false,
       "collapsable": true,
       "panels": [
         {
+          "title": "Success vs. Failure Responses",
           "loading": false,
           "span": 5,
           "editable": true,
@@ -162,6 +193,7 @@
           }
         },
         {
+          "title": "Response Codes",
           "loading": false,
           "error": false,
           "span": 3,
@@ -171,7 +203,7 @@
           ],
           "type": "pie",
           "query": {
-            "field": "@fields.response",
+            "field": "response",
             "goal": 100
           },
           "queries": {
@@ -193,6 +225,7 @@
           "spyable": true
         },
         {
+          "title": "Failure Responses",
           "loading": false,
           "span": 4,
           "editable": true,
@@ -272,13 +305,14 @@
       "notice": false
     },
     {
-      "title": "Events",
+      "title": "Requests",
       "height": "350px",
       "editable": true,
       "collapse": false,
       "collapsable": true,
       "panels": [
         {
+          "title": "Requests",
           "loading": false,
           "error": false,
           "editable": true,
@@ -301,10 +335,10 @@
           "overflow": "min-height",
           "fields": [
             "@timestamp",
-            "@fields.outputMsisdn",
-            "@fields.timetaken",
-            "@fields.response",
-            "@fields.request"
+            "outputMsisdn",
+            "timetaken",
+            "response",
+            "request"
           ],
           "highlight": [],
           "sortable": true,
@@ -341,28 +375,28 @@
     "server": "https://log.verse.in"
   },
   "style": "light",
-  "timezone": "Africa/Nairobi",
+  "timezone": "{{ARGS.timezone}}",
   "failover": false,
   "panel_hints": true,
   "pulldowns": [
     {
       "type": "query",
-      "collapse": false,
+      "collapse": true,
       "notice": false,
       "enable": true,
       "query": "*",
       "pinned": true,
       "history": [
-        "@type:\"apache_combined_access_logs\" AND @fields.timetaken:[1000000 TO *] AND NOT @message:\"dm-webservice\"",
-        "@type:\"apache_combined_access_logs\" AND NOT @fields.response:[200 TO 399] AND NOT @fields.request:\"/favicon.ico\"",
-        "@type:\"apache_combined_access_logs\" AND @fields.response:[200 TO 399]"
+        "type:\"apache_combined_access_logs\" AND timetaken:[1000000 TO *] AND NOT message:\"dm-webservice\"",
+        "type:\"apache_combined_access_logs\" AND NOT response:[200 TO 399] AND NOT request:\"/favicon.ico\"",
+        "type:\"apache_combined_access_logs\" AND response:[200 TO 399]"
       ],
       "remember": 10
     },
     {
       "type": "filtering",
-      "collapse": false,
-      "notice": true,
+      "collapse": true,
+      "notice": false,
       "enable": true
     }
   ],
@@ -399,6 +433,11 @@
       "timefield": "@timestamp",
       "now": true,
       "filter_id": 0
+    },
+    {
+      "type": "navigation",
+      "source": "url",
+      "url": "app/dashboards/links.json"
     }
   ],
   "loader": {

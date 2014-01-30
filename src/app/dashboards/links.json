@@ -14,12 +14,16 @@
       "url": "#/dashboard/file/am.json"
     },
     {
+      "name": "App Apache",
+      "url": "#/dashboard/file/apache.json?operator=App&active=false&timezone=Asia/Kolkata"
+    },
+    {
       "name": "Safaricom Analytics",
       "url": "#/dashboard/file/safaricom.json"
     },
     {
-      "name": "Safaricom Errors",
-      "url": "#/dashboard/file/apache-error.json?operator=safaricom"
+      "name": "Safaricom Apache",
+      "url": "#/dashboard/file/apache.json?operator=safaricomkenya&active=true&timezone=Africa/Nairobi"
     },
     {
       "name": "Staging",
