@@ -20,9 +20,8 @@
 define([
   'angular',
   'config',
-  'underscore',
+  'lodash',
   'timezonejs',
-
   'services/all'
 ],
 function (angular, config, _, timezoneJS) {
@@ -50,7 +49,7 @@ function (angular, config, _, timezoneJS) {
     $scope.init = function() {
       $scope.config = config;
       $scope.kbnVersion = kbnVersion;
-      // Make stuff, including underscore.js available to views
+      // Make stuff, including lodash available to views
       $scope._ = _;
       timezoneJS.timezone.zoneFileBasePath = config.timezone_path;
       timezoneJS.timezone.defaultZoneFile = config.default_zone_file;

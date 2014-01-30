@@ -23,8 +23,8 @@ require.config({
     datepicker:               '../vendor/angular/datepicker',
     bindonce:                 '../vendor/angular/bindonce',
 
-    underscore:               'components/underscore.extended',
-    'underscore-src':         '../vendor/underscore',
+    lodash:                   'components/lodash.extended',
+    'lodash-src':             '../vendor/lodash',
     bootstrap:                '../vendor/bootstrap/bootstrap',
 
     jquery:                   '../vendor/jquery/jquery-1.8.0',
@@ -48,10 +48,6 @@ require.config({
     timezonejs:								'../vendor/timezone'
   },
   shim: {
-    underscore: {
-      exports: '_'
-    },
-
     angular: {
       deps: ['jquery','config'],
       exports: 'angular'

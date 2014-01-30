@@ -1,4 +1,10 @@
-define(['angular', 'jquery', 'underscore', 'moment', 'timezonejs'], function (angular, $, _, moment, timezoneJS) {
+define([
+  'angular',
+  'jquery',
+  'lodash',
+  'moment',
+  'timezonejs'
+], function (angular, $, _, moment, timezoneJS) {
   'use strict';
 
   var module = angular.module('kibana.filters');

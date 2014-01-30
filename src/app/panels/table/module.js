@@ -13,8 +13,9 @@
 define([
   'angular',
   'app',
-  'underscore',
-  'kbn'
+  'lodash',
+  'kbn',
+  'moment',
 ],
 function (angular, app, _, kbn) {
   'use strict';
