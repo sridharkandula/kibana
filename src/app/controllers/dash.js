@@ -32,8 +32,6 @@ function (angular, config, _, timezoneJS) {
   module.controller('DashCtrl', function(
     $scope, $route, ejsResource, fields, dashboard, alertSrv, panelMove, esVersion, kbnVersion) {
 
-    $scope.requiredElasticSearchVersion = ">=0.90.3";
-
     $scope.editor = {
       index: 0
     };
