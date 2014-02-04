@@ -18,6 +18,10 @@
       "url": "#/dashboard/file/apache.json?operator=App&active=false&timezone=Asia/Kolkata"
     },
     {
+      "name": "DB Queries",
+      "url": "#/dashboard/file/db.json"
+    },
+    {
       "name": "Safaricom Analytics",
       "url": "#/dashboard/file/safaricom.json"
     },
