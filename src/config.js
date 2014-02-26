@@ -61,7 +61,7 @@ function (Settings) {
     panel_names: [
       'histogram',
       'map',
-      'pie',
+      'goal',
       'table',
       'filtering',
       'timepicker',
