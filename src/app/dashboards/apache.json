@@ -194,35 +194,38 @@
         },
         {
           "title": "Response Codes",
-          "loading": false,
           "error": false,
           "span": 3,
           "editable": true,
-          "group": [
-            "default"
-          ],
-          "type": "pie",
-          "query": {
-            "field": "response",
-            "goal": 100
+          "type": "terms",
+          "loadingEditor": false,
+          "field": "response",
+          "exclude": [],
+          "missing": false,
+          "other": false,
+          "size": 100,
+          "order": "count",
+          "style": {
+            "font-size": "10pt"
           },
+          "donut": false,
+          "tilt": false,
+          "labels": true,
+          "arrangement": "horizontal",
+          "chart": "pie",
+          "counter_pos": "above",
+          "spyable": true,
           "queries": {
-            "mode": "all",
-            "ids": [
+          "mode": "all",
+          "ids": [
               0,
               1,
               2
             ]
           },
-          "size": 10,
-          "exclude": [],
-          "donut": false,
-          "tilt": false,
-          "legend": "above",
-          "labels": true,
-          "mode": "terms",
-          "default_field": "DEFAULT",
-          "spyable": true
+          "tmode": "terms",
+          "tstat": "total",
+          "valuefield": ""
         },
         {
           "title": "Failure Responses",
