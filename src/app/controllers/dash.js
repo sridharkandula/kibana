@@ -32,6 +32,8 @@ function (angular, config, _, timezoneJS) {
   module.controller('DashCtrl', function(
     $scope, $route, ejsResource, fields, dashboard, alertSrv, panelMove, esVersion, kbnVersion) {
 
+    $scope.Math = Math;
+
     $scope.editor = {
       index: 0
     };
