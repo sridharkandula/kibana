@@ -5,3 +5,4 @@ dist
 .settings/
 .idea/
 *.iml
+.DS_Store
