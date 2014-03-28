@@ -345,6 +345,7 @@ function (angular, app, _, kbn) {
         $scope.panelMeta.loading = false;
 
         if(_segment === 0) {
+          $scope.panel.offset = 0;
           $scope.hits = 0;
           $scope.data = [];
           $scope.current_fields = [];
