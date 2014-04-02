@@ -327,7 +327,7 @@ function (angular, app, _, kbn) {
       request = request.query(
         $scope.ejs.FilteredQuery(
           boolQuery,
-          filterSrv.getBoolFilter(filterSrv.ids)
+          filterSrv.getBoolFilter(filterSrv.ids())
         ))
         .highlight(
           $scope.ejs.Highlight($scope.panel.highlight)
