@@ -6,20 +6,8 @@
       "url": "#/dashboard/file/default.json"
     },
     {
-      "name": "Admin",
-      "url": "#/dashboard/file/admin.json"
-    },
-    {
-      "name": "AM",
-      "url": "#/dashboard/file/am.json"
-    },
-    {
       "name": "App Apache",
       "url": "#/dashboard/file/apache.json?operator=App&active=false&timezone=Asia/Kolkata"
-    },
-    {
-      "name": "DB Queries",
-      "url": "#/dashboard/file/db.json"
     },
     {
       "name": "Safaricom Analytics",
@@ -30,8 +18,8 @@
       "url": "#/dashboard/file/apache.json?operator=safaricomkenya&active=true&timezone=Africa/Nairobi"
     },
     {
-      "name": "Staging",
-      "url": "#/dashboard/file/staging.json"
+      "name": "Vodacomtanzania Revenue",
+      "url": "#/dashboard/elasticsearch/Vodacomtanzania%20Revenue"
     }
   ]
 }
