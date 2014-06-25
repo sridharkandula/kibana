@@ -18,8 +18,12 @@
       "url": "#/dashboard/file/apache.json?operator=safaricomkenya&active=true&timezone=Africa/Nairobi"
     },
     {
-      "name": "Vodacomtanzania Revenue",
-      "url": "#/dashboard/file/vodacomtanzaniaRevenue.json"
+      "name": "Vodacom Tanzania Revenue",
+      "url": "#/dashboard/file/vodacomtanzania-revenue.json"
+    },
+    {
+      "name": "Airtel Ghana Revenue",
+      "url": "#/dashboard/file/airtelghana-revenue.json"
     }
   ]
 }
