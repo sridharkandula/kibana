@@ -26,8 +26,12 @@
       "url": "#/dashboard/file/airtelghana-revenue.json"
     },
     {
-      "name": "Airtel Ghana Revenue",
+      "name": "Airtel Tanzania Revenue",
       "url": "#/dashboard/file/airteltanzania-revenue.json"
+    },
+    {
+      "name": "Airtel Gabon Revenue",
+      "url": "#/dashboard/file/airtelgabon-revenue.json"
     }
   ]
 }
