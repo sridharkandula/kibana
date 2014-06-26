@@ -24,6 +24,10 @@
     {
       "name": "Airtel Ghana Revenue",
       "url": "#/dashboard/file/airtelghana-revenue.json"
+    },
+    {
+      "name": "Airtel Ghana Revenue",
+      "url": "#/dashboard/file/airteltanzania-revenue.json"
     }
   ]
 }
