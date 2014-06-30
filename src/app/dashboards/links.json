@@ -22,6 +22,18 @@
       "url": "#/dashboard/file/vodacomtanzania-revenue.json"
     },
     {
+      "name": "Safaricom Kenya Revenue",
+      "url": "#/dashboard/file/safaricomkenya-revenue.json"
+    },
+    {
+      "name": "Globacom Nigeria Revenue",
+      "url": "#/dashboard/file/globacomnigeria-revenue.json"
+    },
+    {
+      "name": "Warid Uganda Revenue",
+      "url": "#/dashboard/file/wariduganda-revenue.json"
+    },
+    {
       "name": "Airtel Ghana Revenue",
       "url": "#/dashboard/file/airtelghana-revenue.json"
     },
