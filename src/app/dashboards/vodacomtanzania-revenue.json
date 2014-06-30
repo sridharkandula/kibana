@@ -1,6 +1,6 @@
 {
   "title": "Vodacom Tanzania Revenue",
-  "timezone": "Asia/Kolkata",
+  "timezone": "Africa/Dar_es_Salaam",
   "style": "light",
   "services": {
     "query": {
@@ -20,7 +20,7 @@
           "pin": true,
           "enable": true,
           "field": "queueId",
-          "size": 15,
+          "size": 30,
           "union": "AND"
         },
         "1": {
@@ -32,7 +32,7 @@
           "pin": true,
           "enable": true,
           "field": "vertical",
-          "size": 10,
+          "size": 50,
           "union": "AND"
         }
       },
@@ -281,7 +281,7 @@
       "title": "Events",
       "height": "350px",
       "editable": true,
-      "collapse": false,
+      "collapse": true,
       "collapsable": true,
       "panels": [
         {
