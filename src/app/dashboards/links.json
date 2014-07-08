@@ -44,6 +44,10 @@
     {
       "name": "Airtel Gabon Revenue",
       "url": "#/dashboard/file/airtelgabon-revenue.json"
+    },
+    {
+      "name": "Airtel Zambia Revenue",
+      "url": "#/dashboard/file/airtelzambia-revenue.json"
     }
   ]
 }
