@@ -24,7 +24,7 @@ function (Settings) {
      * ProxyPassMatch ^(/es2)(.*)$ http://192.168.1.2/$2
      * and in the following config i can add http://mydomain/es2
      */
-    elasticsearch_servers: ["https://log.verse.in", "https://log.verse.in/airtel-tanzania", "https://log.verse.in/airtel-ghana", "https://log.verse.in/airtel-gabon", "https://log.verse.in/airtel-zambia"],
+    elasticsearch_servers: ["https://log.verse.in", "https://log.verse.in/airtel-tanzania", "https://log.verse.in/airtel-ghana", "https://log.verse.in/airtel-gabon", "https://log.verse.in/airtel-zambia", "https://log.verse.in/airtel-congodrc", "https://log.verse.in/airtel-nigeria", "https://log.verse.in/airtel-burkina", "https://log.verse.in/airtel-congo", "https://log.verse.in/airtel-uganda", "https://log.verse.in/airtel-kenya", "https://log.verse.in/airtel-sierra", "https://log.verse.in/airtel-malawi", "https://log.verse.in/airtel-madagascar", "https://log.verse.in/airtel-chad", "https://log.verse.in/airtel-niger"],
     
     /** @scratch /configuration/config.js/5
      *
