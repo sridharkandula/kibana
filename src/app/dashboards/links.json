@@ -32,6 +32,18 @@
     {
       "name": "Warid Uganda Revenue",
       "url": "#/dashboard/file/wariduganda-revenue.json"
+    },,
+    {
+      "name": "Airtel Nigeria Revenue",
+      "url": "#/dashboard/file/airtelnigeria-revenue.json"
+    },
+    {
+      "name": "Airtel Kenya Revenue",
+      "url": "#/dashboard/file/airtelkenya-revenue.json"
+    },
+    {
+      "name": "Airtel Congo DRC Revenue",
+      "url": "#/dashboard/file/airtelcongodrc-revenue.json"
     },
     {
       "name": "Airtel Ghana Revenue",
@@ -42,12 +54,44 @@
       "url": "#/dashboard/file/airteltanzania-revenue.json"
     },
     {
-      "name": "Airtel Gabon Revenue",
-      "url": "#/dashboard/file/airtelgabon-revenue.json"
+      "name": "Airtel Uganda Revenue",
+      "url": "#/dashboard/file/airteluganda-revenue.json"
     },
     {
       "name": "Airtel Zambia Revenue",
       "url": "#/dashboard/file/airtelzambia-revenue.json"
+    },
+    {
+      "name": "Airtel Gabon Revenue",
+      "url": "#/dashboard/file/airtelgabon-revenue.json"
+    },
+    {
+      "name": "Airtel Congo Revenue",
+      "url": "#/dashboard/file/airtelcongo-revenue.json"
+    },
+    {
+      "name": "Airtel Burkina Revenue",
+      "url": "#/dashboard/file/airtelburkina-revenue.json"
+    },
+    {
+      "name": "Airtel Malawi Revenue",
+      "url": "#/dashboard/file/airtelmalawi-revenue.json"
+    },
+    {
+      "name": "Airtel Madagascar Revenue",
+      "url": "#/dashboard/file/airtelmadagascar-revenue.json"
+    },
+    {
+      "name": "Airtel Niger Revenue",
+      "url": "#/dashboard/file/airtelniger-revenue.json"
+    },
+    {
+      "name": "Airtel Chad Revenue",
+      "url": "#/dashboard/file/airtelchad-revenue.json"
+    },
+    {
+      "name": "Airtel Sierra Revenue",
+      "url": "#/dashboard/file/airtelsierra-revenue.json"
     }
   ]
 }
