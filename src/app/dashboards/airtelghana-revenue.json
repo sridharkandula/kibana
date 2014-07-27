@@ -1,7 +1,7 @@
 {
   "title": "Airtel Ghana Revenue",
   "timezone": "Africa/Accra",
-  "style": "light",
+  "style": "dark",
   "services": {
     "query": {
       "idQueue": [
@@ -14,31 +14,84 @@
         "0": {
           "id": 0,
           "type": "topN",
-          "query": "operator:\"airtelghana\"",
+          "query": "operator:\"airtelghana\" AND transactionName:\"charger\"",
           "alias": "Queue",
           "color": "#447EBC",
           "pin": true,
           "enable": true,
           "field": "queueId",
-          "size": 15,
+          "size": 30,
           "union": "AND"
         },
         "1": {
           "id": 1,
           "type": "topN",
-          "query": "operator:\"airtelghana\"",
+          "query": "operator:\"airtelghana\" AND transactionName:\"charger\"",
           "alias": "Vertical",
           "color": "#EAB839",
           "pin": true,
           "enable": true,
           "field": "vertical",
-          "size": 10,
+          "size": 7,
+          "union": "AND"
+        },
+        "2": {
+          "id": 2,
+          "color": "#6ED0E0",
+          "alias": "Uploader",
+          "pin": true,
+          "type": "lucene",
+          "enable": true,
+          "query": "operator:\"airtelghana\" AND transactionName:\"uploader\""
+        },
+        "3": {
+          "id": 3,
+          "color": "#BF1B00",
+          "alias": "Charger",
+          "pin": true,
+          "type": "lucene",
+          "enable": true,
+          "query": "operator:\"airtelghana\" AND transactionName:\"charger\""
+        },
+        "4": {
+          "id": 4,
+          "color": "#7EB26D",
+          "alias": "Postprocessor",
+          "pin": true,
+          "type": "lucene",
+          "enable": true,
+          "query": "operator:\"airtelghana\" AND transactionName:\"postprocessor\""
+        },
+        "5": {
+          "id": 5,
+          "color": "#CCA300",
+          "alias": "RBC",
+          "pin": true,
+          "type": "lucene",
+          "enable": true,
+          "query": "operator:\"airtelghana\" AND transactionName:\"rbc\""
+        },
+        "6": {
+          "id": 6,
+          "type": "topN",
+          "query": "operator:\"airtelghana\" AND transactionName:\"charger\"",
+          "alias": "PP",
+          "color": "#BA43A9",
+          "pin": true,
+          "enable": true,
+          "field": "amountCharged",
+          "size": 5,
           "union": "AND"
         }
       },
       "ids": [
         0,
-        1
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
       ]
     },
     "filter": {
@@ -50,39 +103,635 @@
         "0": {
           "type": "time",
           "field": "@timestamp",
-          "from": "now-24h",
+          "from": "now-12h",
           "to": "now",
           "mandate": "must",
           "active": true,
           "alias": "",
           "id": 0
         },
+        "1": {
+          "type": "field",
+          "field": "ubsId",
+          "query": "338818",
+          "mandate": "must",
+          "active": false,
+          "alias": "",
+          "id": 1
+        },
         "2": {
           "type": "field",
-          "field": "transactionName",
-          "query": "\"charger\"",
+          "field": "msisdn",
+          "query": "\"22677272833\"",
           "mandate": "must",
-          "active": true,
+          "active": false,
           "alias": "",
           "id": 2
+        },
+        "3": {
+          "type": "field",
+          "field": "transactionId",
+          "query": "\"14564128543078157\"",
+          "mandate": "must",
+          "active": false,
+          "alias": "",
+          "id": 3
         }
       },
       "ids": [
         0,
-        2
+        1,
+        2,
+        3
       ]
     }
   },
   "rows": [
     {
       "title": "Graph",
-      "height": "350px",
+      "height": "250px",
       "editable": true,
       "collapse": false,
       "collapsable": true,
       "panels": [
         {
-          "span": 6,
+          "error": false,
+          "span": 4,
+          "editable": true,
+          "type": "stats",
+          "loadingEditor": false,
+          "queries": {
+            "mode": "selected",
+            "ids": [
+              0
+            ]
+          },
+          "style": {
+            "font-size": "18pt"
+          },
+          "format": "number",
+          "mode": "total",
+          "display_breakdown": "yes",
+          "sort_field": "total",
+          "sort_reverse": true,
+          "label_name": "Queue Id",
+          "value_name": "Value",
+          "spyable": true,
+          "show": {
+            "count": false,
+            "min": false,
+            "max": true,
+            "mean": false,
+            "std_deviation": false,
+            "sum_of_squares": false,
+            "total": true,
+            "variance": false
+          },
+          "field": "amountCharged",
+          "unit": "GHS",
+          "title": "Queue Wise Revenue"
+        },
+        {
+          "span": 5,
+          "editable": true,
+          "type": "histogram",
+          "loadingEditor": false,
+          "mode": "count",
+          "time_field": "@timestamp",
+          "value_field": null,
+          "x-axis": true,
+          "y-axis": true,
+          "scale": 1,
+          "y_format": "none",
+          "grid": {
+            "max": null,
+            "min": null
+          },
+          "queries": {
+            "mode": "selected",
+            "ids": [
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          "annotate": {
+            "enable": false,
+            "query": "*",
+            "size": 20,
+            "field": "_type",
+            "sort": [
+              "_score",
+              "desc"
+            ]
+          },
+          "auto_int": true,
+          "resolution": 100,
+          "interval": "5m",
+          "intervals": [
+            "auto",
+            "1s",
+            "1m",
+            "5m",
+            "10m",
+            "30m",
+            "1h",
+            "3h",
+            "12h",
+            "1d",
+            "1w",
+            "1y"
+          ],
+          "lines": false,
+          "fill": 1,
+          "linewidth": 1,
+          "points": false,
+          "pointradius": 5,
+          "bars": true,
+          "stack": true,
+          "spyable": true,
+          "zoomlinks": true,
+          "options": true,
+          "legend": true,
+          "show_query": true,
+          "interactive": true,
+          "legend_counts": true,
+          "timezone": "browser",
+          "percentage": false,
+          "zerofill": true,
+          "derivative": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": true
+          },
+          "title": "Billing Processes"
+        },
+        {
+          "span": 3,
+          "editable": true,
+          "type": "trends",
+          "loadingEditor": false,
+          "ago": "1d",
+          "arrangement": "vertical",
+          "spyable": true,
+          "queries": {
+            "mode": "selected",
+            "ids": [
+              0
+            ]
+          },
+          "style": {
+            "font-size": "14pt"
+          },
+          "title": "Revenue Trends (Queue)"
+        }
+      ],
+      "notice": false
+    },
+    {
+      "title": "Billing IN Response",
+      "height": "150px",
+      "editable": true,
+      "collapse": false,
+      "collapsable": true,
+      "panels": [
+        {
+          "error": false,
+          "span": 4,
+          "editable": true,
+          "type": "terms",
+          "loadingEditor": false,
+          "field": "errorCode",
+          "exclude": [],
+          "missing": false,
+          "other": false,
+          "size": 15,
+          "order": "count",
+          "style": {
+            "font-size": "10pt"
+          },
+          "donut": false,
+          "tilt": false,
+          "labels": true,
+          "arrangement": "horizontal",
+          "chart": "bar",
+          "counter_pos": "none",
+          "spyable": true,
+          "queries": {
+            "mode": "selected",
+            "ids": [
+              3
+            ]
+          },
+          "tmode": "terms",
+          "tstat": "total",
+          "valuefield": "",
+          "title": "Charger ErrorCodes"
+        },
+        {
+          "span": 4,
+          "editable": true,
+          "type": "histogram",
+          "loadingEditor": false,
+          "mode": "mean",
+          "time_field": "@timestamp",
+          "value_field": "checkBalanceTime",
+          "x-axis": true,
+          "y-axis": true,
+          "scale": 1,
+          "y_format": "none",
+          "grid": {
+            "max": null,
+            "min": null
+          },
+          "queries": {
+            "mode": "selected",
+            "ids": [
+              3
+            ]
+          },
+          "annotate": {
+            "enable": false,
+            "query": "*",
+            "size": 20,
+            "field": "_type",
+            "sort": [
+              "_score",
+              "desc"
+            ]
+          },
+          "auto_int": true,
+          "resolution": 100,
+          "interval": "5m",
+          "intervals": [
+            "auto",
+            "1s",
+            "1m",
+            "5m",
+            "10m",
+            "30m",
+            "1h",
+            "3h",
+            "12h",
+            "1d",
+            "1w",
+            "1y"
+          ],
+          "lines": true,
+          "fill": 0,
+          "linewidth": 1,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": true,
+          "spyable": true,
+          "zoomlinks": true,
+          "options": true,
+          "legend": false,
+          "show_query": true,
+          "interactive": true,
+          "legend_counts": true,
+          "timezone": "browser",
+          "percentage": false,
+          "zerofill": true,
+          "derivative": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": true
+          },
+          "title": "Check Balance RT(ms)"
+        },
+        {
+          "span": 4,
+          "editable": true,
+          "type": "histogram",
+          "loadingEditor": false,
+          "mode": "mean",
+          "time_field": "@timestamp",
+          "value_field": "debitBalanceTime",
+          "x-axis": true,
+          "y-axis": true,
+          "scale": 1,
+          "y_format": "none",
+          "grid": {
+            "max": null,
+            "min": null
+          },
+          "queries": {
+            "mode": "selected",
+            "ids": [
+              3
+            ]
+          },
+          "annotate": {
+            "enable": false,
+            "query": "*",
+            "size": 20,
+            "field": "_type",
+            "sort": [
+              "_score",
+              "desc"
+            ]
+          },
+          "auto_int": true,
+          "resolution": 100,
+          "interval": "5m",
+          "intervals": [
+            "auto",
+            "1s",
+            "1m",
+            "5m",
+            "10m",
+            "30m",
+            "1h",
+            "3h",
+            "12h",
+            "1d",
+            "1w",
+            "1y"
+          ],
+          "lines": true,
+          "fill": 0,
+          "linewidth": 1,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": true,
+          "spyable": true,
+          "zoomlinks": true,
+          "options": true,
+          "legend": false,
+          "show_query": true,
+          "interactive": true,
+          "legend_counts": true,
+          "timezone": "browser",
+          "percentage": false,
+          "zerofill": true,
+          "derivative": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": true
+          },
+          "title": "DEBIT BALANCE RT(ms)"
+        }
+      ],
+      "notice": false
+    },
+    {
+      "title": "Status",
+      "height": "180px",
+      "editable": true,
+      "collapse": false,
+      "collapsable": true,
+      "panels": [
+        {
+          "span": 3,
+          "editable": true,
+          "type": "trends",
+          "loadingEditor": false,
+          "ago": "1d",
+          "arrangement": "vertical",
+          "spyable": true,
+          "queries": {
+            "mode": "selected",
+            "ids": [
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          "style": {
+            "font-size": "14pt"
+          },
+          "title": "Attempts"
+        },
+        {
+          "error": false,
+          "span": 3,
+          "editable": true,
+          "type": "terms",
+          "loadingEditor": false,
+          "field": "PROCESSING_STATUS",
+          "exclude": [],
+          "missing": false,
+          "other": false,
+          "size": 10,
+          "order": "count",
+          "style": {
+            "font-size": "10pt"
+          },
+          "donut": false,
+          "tilt": false,
+          "labels": true,
+          "arrangement": "horizontal",
+          "chart": "table",
+          "counter_pos": "above",
+          "spyable": true,
+          "queries": {
+            "mode": "selected",
+            "ids": [
+              2
+            ]
+          },
+          "tmode": "terms",
+          "tstat": "total",
+          "valuefield": "",
+          "title": "Uploader Status"
+        },
+        {
+          "error": false,
+          "span": 3,
+          "editable": true,
+          "type": "terms",
+          "loadingEditor": false,
+          "field": "PROCESSING_STATUS",
+          "exclude": [],
+          "missing": false,
+          "other": false,
+          "size": 10,
+          "order": "count",
+          "style": {
+            "font-size": "10pt"
+          },
+          "donut": false,
+          "tilt": false,
+          "labels": true,
+          "arrangement": "horizontal",
+          "chart": "table",
+          "counter_pos": "above",
+          "spyable": true,
+          "queries": {
+            "mode": "selected",
+            "ids": [
+              5
+            ]
+          },
+          "tmode": "terms",
+          "tstat": "total",
+          "valuefield": "",
+          "title": "RBC Status"
+        },
+        {
+          "error": false,
+          "span": 3,
+          "editable": true,
+          "type": "terms",
+          "loadingEditor": false,
+          "field": "PROCESSING_STATUS",
+          "exclude": [],
+          "missing": false,
+          "other": false,
+          "size": 10,
+          "order": "count",
+          "style": {
+            "font-size": "10pt"
+          },
+          "donut": false,
+          "tilt": false,
+          "labels": true,
+          "arrangement": "horizontal",
+          "chart": "table",
+          "counter_pos": "above",
+          "spyable": true,
+          "queries": {
+            "mode": "selected",
+            "ids": [
+              4
+            ]
+          },
+          "tmode": "terms",
+          "tstat": "total",
+          "valuefield": "",
+          "title": "PostProcessor Status"
+        }
+      ],
+      "notice": false
+    },
+    {
+      "title": "Trends",
+      "height": "150px",
+      "editable": true,
+      "collapse": false,
+      "collapsable": true,
+      "panels": [
+        {
+          "error": false,
+          "span": 3,
+          "editable": true,
+          "type": "terms",
+          "loadingEditor": false,
+          "field": "isSuccess",
+          "exclude": [],
+          "missing": false,
+          "other": false,
+          "size": 5,
+          "order": "count",
+          "style": {
+            "font-size": "10pt"
+          },
+          "donut": false,
+          "tilt": false,
+          "labels": true,
+          "arrangement": "horizontal",
+          "chart": "table",
+          "counter_pos": "above",
+          "spyable": true,
+          "queries": {
+            "mode": "selected",
+            "ids": [
+              3
+            ]
+          },
+          "tmode": "terms",
+          "tstat": "total",
+          "valuefield": "amountCharged",
+          "title": "Charger stats"
+        },
+        {
+          "error": false,
+          "span": 3,
+          "editable": true,
+          "type": "terms",
+          "loadingEditor": false,
+          "field": "errorCode",
+          "exclude": [],
+          "missing": false,
+          "other": false,
+          "size": 10,
+          "order": "count",
+          "style": {
+            "font-size": "10pt"
+          },
+          "donut": false,
+          "tilt": false,
+          "labels": true,
+          "arrangement": "horizontal",
+          "chart": "table",
+          "counter_pos": "above",
+          "spyable": true,
+          "queries": {
+            "mode": "selected",
+            "ids": [
+              5
+            ]
+          },
+          "tmode": "terms",
+          "tstat": "total",
+          "valuefield": "",
+          "title": "RBC Error Codes"
+        },
+        {
+          "span": 3,
+          "editable": true,
+          "type": "trends",
+          "loadingEditor": false,
+          "ago": "1d",
+          "arrangement": "vertical",
+          "spyable": true,
+          "queries": {
+            "mode": "selected",
+            "ids": [
+              6
+            ]
+          },
+          "style": {
+            "font-size": "14pt"
+          },
+          "title": "Revenue Trends (Pricepoint)"
+        },
+        {
+          "span": 3,
+          "editable": true,
+          "type": "trends",
+          "loadingEditor": false,
+          "ago": "1d",
+          "arrangement": "vertical",
+          "spyable": true,
+          "queries": {
+            "mode": "selected",
+            "ids": [
+              1
+            ]
+          },
+          "style": {
+            "font-size": "14pt"
+          },
+          "title": "Revenue Trends (Vertical)"
+        }
+      ],
+      "notice": false
+    },
+    {
+      "title": "Revenue",
+      "height": "250px",
+      "editable": true,
+      "collapse": false,
+      "collapsable": true,
+      "panels": [
+        {
+          "span": 5,
           "editable": true,
           "group": [
             "default"
@@ -91,7 +740,7 @@
           "mode": "count",
           "time_field": "@timestamp",
           "queries": {
-            "mode": "all",
+            "mode": "selected",
             "ids": [
               0,
               1
@@ -100,9 +749,9 @@
           "value_field": null,
           "auto_int": true,
           "resolution": 100,
-          "interval": "10m",
-          "fill": 3,
-          "linewidth": 3,
+          "interval": "5m",
+          "fill": 0,
+          "linewidth": 1,
           "timezone": "browser",
           "spyable": true,
           "zoomlinks": true,
@@ -120,7 +769,7 @@
           "y_format": "none",
           "grid": {
             "max": null,
-            "min": 0
+            "min": null
           },
           "annotate": {
             "enable": false,
@@ -159,88 +808,44 @@
         },
         {
           "error": false,
-          "span": 4,
-          "editable": true,
-          "type": "terms",
-          "loadingEditor": false,
-          "field": "operator",
-          "exclude": [],
-          "missing": true,
-          "other": true,
-          "size": 10,
-          "order": "count",
-          "style": {
-            "font-size": "10pt"
-          },
-          "donut": false,
-          "tilt": false,
-          "labels": true,
-          "arrangement": "horizontal",
-          "chart": "table",
-          "counter_pos": "above",
-          "spyable": true,
-          "queries": {
-            "mode": "all",
-            "ids": [
-              0,
-              1
-            ]
-          },
-          "tmode": "terms",
-          "tstat": "total",
-          "valuefield": "",
-          "title": "Operators"
-        }
-      ],
-      "notice": false
-    },
-    {
-      "title": "",
-      "height": "150px",
-      "editable": true,
-      "collapse": false,
-      "collapsable": true,
-      "panels": [
-        {
-          "error": false,
-          "span": 6,
+          "span": 3,
           "editable": true,
           "type": "stats",
           "loadingEditor": false,
           "queries": {
             "mode": "selected",
             "ids": [
-              0
+              6
             ]
           },
           "style": {
-            "font-size": "24pt"
+            "font-size": "20pt"
           },
           "format": "number",
           "mode": "total",
           "display_breakdown": "yes",
           "sort_field": "total",
           "sort_reverse": true,
-          "label_name": "Queue Id",
+          "label_name": "Pricepoint",
           "value_name": "Value",
           "spyable": true,
           "show": {
-            "count": true,
-            "min": true,
+            "count": false,
+            "min": false,
             "max": true,
-            "mean": true,
-            "std_deviation": true,
+            "mean": false,
+            "std_deviation": false,
             "sum_of_squares": false,
             "total": true,
-            "variance": true
+            "variance": false
           },
+          "title": "Pricepoint",
           "field": "amountCharged",
-          "unit": "GHS",
-          "title": "Queue Wise Revenue"
+          "unit": "GHS"
         },
         {
           "error": false,
-          "span": 6,
+          "span": 4,
           "editable": true,
           "type": "stats",
           "loadingEditor": false,
@@ -251,7 +856,7 @@
             ]
           },
           "style": {
-            "font-size": "24pt"
+            "font-size": "20pt"
           },
           "format": "number",
           "mode": "total",
@@ -262,14 +867,14 @@
           "value_name": "Value",
           "spyable": true,
           "show": {
-            "count": true,
-            "min": true,
+            "count": false,
+            "min": false,
             "max": true,
-            "mean": true,
-            "std_deviation": true,
+            "mean": false,
+            "std_deviation": false,
             "sum_of_squares": false,
             "total": true,
-            "variance": true
+            "variance": false
           },
           "title": "Vertical Wise Revenue",
           "field": "amountCharged",
@@ -323,7 +928,12 @@
             "mode": "all",
             "ids": [
               0,
-              1
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
             ]
           },
           "field_list": false,
@@ -356,23 +966,28 @@
   "pulldowns": [
     {
       "type": "query",
-      "collapse": false,
+      "collapse": true,
       "notice": false,
       "enable": true,
       "query": "*",
       "pinned": true,
       "history": [
-        "operator:\"airtelghana\"",
-        "operator:\"vodacomtanzania\"",
+        "operator:\"airtelghana\" AND transactionName:\"charger\"",
+        "operator:\"airtelghana\" AND transactionName:\"rbc\"",
+        "operator:\"airtelghana\" AND transactionName:\"postprocessor\"",
+        "operator:\"airtelghana\" AND transactionName:\"uploader\"",
         "*",
+        "operator:\"airtelghana\"",
+        "operator:\"airtelghana\" AND",
+        "operator:\"vodacomtanzania\"",
         ""
       ],
       "remember": 10
     },
     {
       "type": "filtering",
-      "collapse": false,
-      "notice": true,
+      "collapse": true,
+      "notice": false,
       "enable": true
     }
   ],
@@ -428,12 +1043,12 @@
     "save_local": true,
     "save_default": true,
     "save_temp": true,
-    "save_temp_ttl_enable": true,
+    "save_temp_ttl_enable": false,
     "save_temp_ttl": "30d",
     "load_gist": false,
     "load_elasticsearch": true,
     "load_elasticsearch_size": 20,
-    "load_local": false,
+    "load_local": true,
     "hide": false
   },
   "refresh": "1m"

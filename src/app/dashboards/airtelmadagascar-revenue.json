@@ -1,6 +1,6 @@
 {
-  "title": "Airtel Zambia Revenue",
-  "timezone": "Africa/Lusaka",
+  "title": "Airtel Madagascar Revenue",
+  "timezone": "Indian/Antananarivo",
   "style": "dark",
   "services": {
     "query": {
@@ -14,7 +14,7 @@
         "0": {
           "id": 0,
           "type": "topN",
-          "query": "operator:\"airtelzambia\" AND transactionName:\"charger\"",
+          "query": "operator:\"airtelmadagascar\" AND transactionName:\"charger\"",
           "alias": "Queue",
           "color": "#447EBC",
           "pin": true,
@@ -26,7 +26,7 @@
         "1": {
           "id": 1,
           "type": "topN",
-          "query": "operator:\"airtelzambia\" AND transactionName:\"charger\"",
+          "query": "operator:\"airtelmadagascar\" AND transactionName:\"charger\"",
           "alias": "Vertical",
           "color": "#EAB839",
           "pin": true,
@@ -42,7 +42,7 @@
           "pin": true,
           "type": "lucene",
           "enable": true,
-          "query": "operator:\"airtelzambia\" AND transactionName:\"uploader\""
+          "query": "operator:\"airtelmadagascar\" AND transactionName:\"uploader\""
         },
         "3": {
           "id": 3,
@@ -51,7 +51,7 @@
           "pin": true,
           "type": "lucene",
           "enable": true,
-          "query": "operator:\"airtelzambia\" AND transactionName:\"charger\""
+          "query": "operator:\"airtelmadagascar\" AND transactionName:\"charger\""
         },
         "4": {
           "id": 4,
@@ -60,7 +60,7 @@
           "pin": true,
           "type": "lucene",
           "enable": true,
-          "query": "operator:\"airtelzambia\" AND transactionName:\"postprocessor\""
+          "query": "operator:\"airtelmadagascar\" AND transactionName:\"postprocessor\""
         },
         "5": {
           "id": 5,
@@ -69,12 +69,12 @@
           "pin": true,
           "type": "lucene",
           "enable": true,
-          "query": "operator:\"airtelzambia\" AND transactionName:\"rbc\""
+          "query": "operator:\"airtelmadagascar\" AND transactionName:\"rbc\""
         },
         "6": {
           "id": 6,
           "type": "topN",
-          "query": "operator:\"airtelzambia\" AND transactionName:\"charger\"",
+          "query": "operator:\"airtelmadagascar\" AND transactionName:\"charger\"",
           "alias": "PP",
           "color": "#BA43A9",
           "pin": true,
@@ -188,7 +188,7 @@
             "variance": false
           },
           "field": "amountCharged",
-          "unit": "ZMW",
+          "unit": "Ar",
           "title": "Queue Wise Revenue"
         },
         {
@@ -841,7 +841,7 @@
           },
           "title": "Pricepoint",
           "field": "amountCharged",
-          "unit": "ZMW"
+          "unit": "Ar"
         },
         {
           "error": false,
@@ -878,7 +878,7 @@
           },
           "title": "Vertical Wise Revenue",
           "field": "amountCharged",
-          "unit": "ZMW"
+          "unit": "Ar"
         }
       ],
       "notice": false
@@ -938,7 +938,7 @@
           },
           "field_list": false,
           "timeField": "@timestamp",
-          "timeFormatShort": "MMM d, HH:mm:ss.S k (Z)",
+          "timeFormaArort": "MMM d, HH:mm:ss.S k (Z)",
           "timeFormatLong": "MMM d, yyyy HH:mm:ss.S k (Z)",
           "status": "Stable",
           "all_fields": true,
@@ -958,7 +958,7 @@
     "interval": "day",
     "pattern": "[billing-]YYYY.MM.DD",
     "default": "_all",
-    "server": "https://log.verse.in/airtel-zambia",
+    "server": "https://log.verse.in/airtel-madagascar",
     "warm_fields": true
   },
   "failover": false,
@@ -972,14 +972,14 @@
       "query": "*",
       "pinned": true,
       "history": [
-        "operator:\"airtelzambia\" AND transactionName:\"charger\"",
-        "operator:\"airtelzambia\" AND transactionName:\"rbc\"",
-        "operator:\"airtelzambia\" AND transactionName:\"postprocessor\"",
-        "operator:\"airtelzambia\" AND transactionName:\"uploader\"",
+        "operator:\"airtelmadagascar\" AND transactionName:\"charger\"",
+        "operator:\"airtelmadagascar\" AND transactionName:\"rbc\"",
+        "operator:\"airtelmadagascar\" AND transactionName:\"postprocessor\"",
+        "operator:\"airtelmadagascar\" AND transactionName:\"uploader\"",
         "*",
-        "operator:\"airtelzambia\"",
-        "operator:\"airtelzambia\" AND",
-        "operator:\"vodacomtanzania\"",
+        "operator:\"airtelmadagascar\"",
+        "operator:\"airtelmadagascar\" AND",
+        "operator:\"vodacommadagascar\"",
         ""
       ],
       "remember": 10
