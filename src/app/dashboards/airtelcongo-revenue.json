@@ -1,7 +1,7 @@
 {
   "title": "Airtel Congo Revenue",
   "timezone": "Africa/Brazzaville",
-  "style": "dark",
+  "style": "light",
   "services": {
     "query": {
       "idQueue": [
@@ -156,7 +156,7 @@
       "panels": [
         {
           "error": false,
-          "span": 4,
+          "span": 3,
           "editable": true,
           "type": "stats",
           "loadingEditor": false,
@@ -192,7 +192,7 @@
           "title": "Queue Wise Revenue"
         },
         {
-          "span": 5,
+          "span": 4,
           "editable": true,
           "type": "histogram",
           "loadingEditor": false,
@@ -270,6 +270,79 @@
         {
           "span": 3,
           "editable": true,
+          "type": "histogram",
+          "loadingEditor": false,
+          "mode": "total",
+          "time_field": "@timestamp",
+          "value_field": "amountCharged",
+          "x-axis": true,
+          "y-axis": true,
+          "scale": 1,
+          "y_format": "none",
+          "grid": {
+            "max": null,
+            "min": 0
+          },
+          "queries": {
+            "mode": "selected",
+            "ids": [
+              3
+            ]
+          },
+          "annotate": {
+            "enable": false,
+            "query": "*",
+            "size": 20,
+            "field": "_type",
+            "sort": [
+              "_score",
+              "desc"
+            ]
+          },
+          "auto_int": false,
+          "resolution": 100,
+          "interval": "1h",
+          "intervals": [
+            "auto",
+            "1s",
+            "1m",
+            "5m",
+            "10m",
+            "30m",
+            "1h",
+            "3h",
+            "12h",
+            "1d",
+            "1w",
+            "1y"
+          ],
+          "lines": false,
+          "fill": 0,
+          "linewidth": 3,
+          "points": false,
+          "pointradius": 5,
+          "bars": true,
+          "stack": true,
+          "spyable": true,
+          "zoomlinks": true,
+          "options": true,
+          "legend": true,
+          "show_query": true,
+          "interactive": true,
+          "legend_counts": true,
+          "timezone": "browser",
+          "percentage": false,
+          "zerofill": true,
+          "derivative": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": true
+          },
+          "title": "Hourly Revenue"
+        },
+        {
+          "span": 2,
+          "editable": true,
           "type": "trends",
           "loadingEditor": false,
           "ago": "1d",
@@ -316,7 +389,7 @@
           "labels": true,
           "arrangement": "horizontal",
           "chart": "bar",
-          "counter_pos": "none",
+          "counter_pos": "above",
           "spyable": true,
           "queries": {
             "mode": "selected",
