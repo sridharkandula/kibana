@@ -96,6 +96,18 @@
     {
       "name": "Robi App Logs DashBoard",
       "url": "#/dashboard/file/robi-appflow-dashboard.json"
+    },
+    {
+      "name": "Banglalink App Logs DashBoard",
+      "url": "#/dashboard/file/banglalink-appflow-dashboard.json"
+    },
+    {
+      "name": "DU App Logs DashBoard",
+      "url": "#/dashboard/file/du-appflow-dashboard.json"
+    },
+    {
+      "name": "MTNGhana App Logs DashBoard",
+      "url": "#/dashboard/file/mtnghana-appflow-dashboard.json"
     }
   ]
 }
