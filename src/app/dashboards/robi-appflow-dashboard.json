@@ -43,7 +43,7 @@
         },
         "1": {
           "type": "querystring",
-          "query": "tags:robi-app",
+          "query": "tags:\"robi-app\"",
           "mandate": "must",
           "active": true,
           "alias": "",
